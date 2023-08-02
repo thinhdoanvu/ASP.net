@@ -1,0 +1,16 @@
+Tạo mới dự án
+
+VS2022 - New Project - ASP.NET Core Web Application (MVC)
+Project name: HelloWorld
+Location: C:\Users\203H231\Documents\ASPNet\
+Tick: Place solution and project in the same directory
+
+Tiếp theo bạn cần lựa chọn project template cho loại ứng dụng đang cần phát triển.
+Frame work: Cài cái nào chọn cái đó
+Authentication type: None
+None tick: (Configure for HTTPS, Enable docker)
+
+NEXT
+
+THỬ NGHIỆM
+Chọn IIS Express - F5/Ctrl F5 để mở trang web bằng trình duyệt
