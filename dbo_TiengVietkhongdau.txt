@@ -1,0 +1,39 @@
+﻿create FUNCTION [dbo].[TiengVietKhongDau]
+(
+@strVietNamese nvarchar(3990)
+)
+RETURNS varchar(3999)
+AS
+BEGIN
+-- Declare the return variable here
+DECLARE @strVietNameseKhongDau varchar(3990)
+Declare  @FindText nvarchar(200)
+Declare @ReplText varchar(200)
+Declare @Len1 int
+Declare @Index int
+Declare @FindTextChar nvarchar(1)
+Declare @ReplTextChar varchar(1)
+Declare @FindChar int
+ 
+SET @FindText = N'áàảãạâấầẩẫậăắằẳẵặđéèẻẽẹêếềểễệíìỉĩịóòỏõọôốồổỗộơớờởỡợúùủũụưứừửữựýỳỷỹỵÁÀẢÃẠÂẤẦẨẪẬĂẮẰẲẴẶĐÉÈẺẼẸÊẾỀỂỄỆÍÌỈĨỊÓÒỎÕỌÔỐỒỔỖỘƠỚỜỞỠỢÚÙỦŨỤƯỨỪỬỮỰÝỲỶỸỴ/""&%'
+SET @ReplText =  'aaaaaaaaaaaaaaaaadeeeeeeeeeeeiiiiiooooooooooooooooouuuuuuuuuuuyyyyyAAAAAAAAAAAAAAAAADEEEEEEEEEEEIIIIIOOOOOOOOOOOOOOOOOUUUUUUUUUUUYYYYY----'
+SET @Len1 = LEN(@ReplText)
+SET @Index = 0
+While @Index<=@Len1
+BEGIN
+  SET @FindTextChar = SUBSTRING(@FindText,@Index, 1) 
+SET @ReplTextChar = SUBSTRING(@ReplText,@Index, 1) 
+SET @FindChar = CHARINDEX (@FindTextChar, @strVietNamese, 0)
+ 
+if(@FindChar>0)
+Begin
+SET @strVietNamese =replace(@strVietNamese, @FindTextChar, @ReplTextChar)
+END
+SET  @Index = @Index +1
+END
+SET @strVietNameseKhongDau = @strVietNamese
+Return @strVietNameseKhongDau
+END
+ 
+GO
+ 
