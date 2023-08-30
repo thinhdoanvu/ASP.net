@@ -129,6 +129,7 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\CategoryController.cs" />
     <Compile Include="Areas\Admin\Controllers\DashboardController.cs" />
+    <Compile Include="Areas\Admin\Controllers\SupplierController.cs" />
     <Compile Include="Controllers\SiteController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -240,7 +241,6 @@
     <Content Include="Public\img\blog\post-img1.jpg" />
     <Content Include="Public\img\blog\post-img2.jpg" />
     <Content Include="Public\img\blog\prev.jpg" />
-    <Content Include="Public\img\cart.jpg" />
     <Content Include="Public\img\cart\cart1.png" />
     <Content Include="Public\img\cart\cart2.png" />
     <Content Include="Public\img\cart\cart3.png" />
@@ -250,7 +250,6 @@
     <Content Include="Public\img\category\c4.jpg" />
     <Content Include="Public\img\category\c5.jpg" />
     <Content Include="Public\img\category\s-p1.jpg" />
-    <Content Include="Public\img\Fevicon.png" />
     <Content Include="Public\img\gallery\r1.jpg" />
     <Content Include="Public\img\gallery\r2.jpg" />
     <Content Include="Public\img\gallery\r3.jpg" />
@@ -276,8 +275,6 @@
     <Content Include="Public\img\instagram\ins-4.jpg" />
     <Content Include="Public\img\instagram\ins-5.jpg" />
     <Content Include="Public\img\instagram\ins-6.jpg" />
-    <Content Include="Public\img\login.jpg" />
-    <Content Include="Public\img\logo.png" />
     <Content Include="Public\img\product\card.jpg" />
     <Content Include="Public\img\product\product-sm-1.png" />
     <Content Include="Public\img\product\product-sm-2.png" />
@@ -299,18 +296,14 @@
     <Content Include="Public\img\product\review-1.png" />
     <Content Include="Public\img\product\review-2.png" />
     <Content Include="Public\img\product\review-3.png" />
-    <Content Include="Public\img\r1.jpg" />
-    <Content Include="Public\img\r10.jpg" />
-    <Content Include="Public\img\r11.jpg" />
-    <Content Include="Public\img\r12.jpg" />
-    <Content Include="Public\img\r2.jpg" />
-    <Content Include="Public\img\r3.jpg" />
-    <Content Include="Public\img\r4.jpg" />
-    <Content Include="Public\img\r5.jpg" />
-    <Content Include="Public\img\r6.jpg" />
-    <Content Include="Public\img\r7.jpg" />
-    <Content Include="Public\img\r8.jpg" />
-    <Content Include="Public\img\r9.jpg" />
+    <Content Include="Public\img\supplier\r10.jpg" />
+    <Content Include="Public\img\supplier\r12.jpg" />
+    <Content Include="Public\img\supplier\r2.jpg" />
+    <Content Include="Public\img\supplier\r3.jpg" />
+    <Content Include="Public\img\supplier\r5.jpg" />
+    <Content Include="Public\img\supplier\r7.jpg" />
+    <Content Include="Public\img\supplier\r8.jpg" />
+    <Content Include="Public\img\supplier\r9.jpg" />
     <Content Include="Public\js\main.js" />
     <Content Include="Public\plugins\bootstrap-colorpicker\css\bootstrap-colorpicker.css" />
     <Content Include="Public\plugins\bootstrap-colorpicker\css\bootstrap-colorpicker.min.css" />
@@ -2529,7 +2522,6 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Public\img\blog\.DS_Store" />
     <Content Include="Public\img\gallery\.DS_Store" />
-    <Content Include="Public\img\Thumbs.db" />
     <Content Include="Public\vendors\fontawesome\webfonts\fa-brands-400.eot" />
     <Content Include="Public\vendors\fontawesome\webfonts\fa-brands-400.ttf" />
     <Content Include="Public\vendors\fontawesome\webfonts\fa-brands-400.woff" />
@@ -2637,6 +2629,11 @@
     <Content Include="Areas\Admin\Views\Category\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Category\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\Message.cshtml" />
+    <Content Include="Areas\Admin\Views\Supplier\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Supplier\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Supplier\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Supplier\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Supplier\Index.cshtml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
