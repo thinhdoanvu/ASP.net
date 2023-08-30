@@ -179,8 +179,12 @@ namespace UDW.Areas.Admin.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Categories categories = categoryDAO.getRow(id);
+            //tim thay mau tin thi xoa
             categoryDAO.Delete(categories);
-            return RedirectToAction("Index");
+            //Thong bao thanh cong
+            TempData["message"] = new XMessage("success", "Xóa danh mục thành công");
+            //O lai trang thung rac
+            return RedirectToAction("Trash");
         }
 
         /////////////////////////////////////////////////////////////////////////////////////
@@ -221,6 +225,77 @@ namespace UDW.Areas.Admin.Controllers
 
             //khi cap nhat xong thi chuyen ve Index
             return RedirectToAction("Index", "Category");
+        }
+
+        /////////////////////////////////////////////////////////////////////////////////////
+        // GET: Admin/Category/DelTrash/5:Thay doi trang thai cua mau tin = 0
+        public ActionResult DelTrash(int? id)
+        {
+            //khi nhap nut thay doi Status cho mot mau tin
+            Categories categories = categoryDAO.getRow(id);
+            
+            //thay doi trang thai Status tu 1,2 thanh 0
+            categories.Status = 0;
+
+            //cap nhat gia tri cho UpdateAt/By
+            categories.UpdateBy = Convert.ToInt32(Session["UserId"].ToString());
+            categories.UpdateAt = DateTime.Now;
+
+            //Goi ham Update trong CategoryDAO
+            categoryDAO.Update(categories);
+
+            //Thong bao thanh cong
+            TempData["message"] = new XMessage("success", "Xóa mẩu tin thành công");
+
+            //khi cap nhat xong thi chuyen ve Index
+            return RedirectToAction("Index", "Category");
+        }
+
+        /////////////////////////////////////////////////////////////////////////////////////
+        // GET: Admin/Category/Trash/5:Hien thi cac mau tin có gia tri la 0
+        public ActionResult Trash(int? id)
+        {
+            return View(categoryDAO.getList("Trash"));
+        }
+
+        /////////////////////////////////////////////////////////////////////////////////////
+        // GET: Admin/Category/Recover/5:Chuyen trang thai Status = 0 thanh =2
+        public ActionResult Recover(int? id)
+        {
+            if (id == null)
+            {
+                //Thong bao that bai
+                TempData["message"] = new XMessage("danger", "Cập nhật trạng thái thất bại");
+                //chuyen huong trang
+                return RedirectToAction("Index", "Category");
+            }
+
+            //khi nhap nut thay doi Status cho mot mau tin
+            Categories categories = categoryDAO.getRow(id);
+            //kiem tra id cua categories co ton tai?
+            if (categories == null)
+            {
+                //Thong bao that bai
+                TempData["message"] = new XMessage("danger", "Phục hồi dữ liệu thất bại");
+
+                //chuyen huong trang
+                return RedirectToAction("Index", "Category");
+            }
+            //thay doi trang thai Status tu 1 thanh 2 va nguoc lai
+            categories.Status = 2;
+
+            //cap nhat gia tri cho UpdateAt/By
+            categories.UpdateBy = Convert.ToInt32(Session["UserId"].ToString());
+            categories.UpdateAt = DateTime.Now;
+
+            //Goi ham Update trong CategoryDAO
+            categoryDAO.Update(categories);
+
+            //Thong bao thanh cong
+            TempData["message"] = new XMessage("success", "Phục hồi dữ liệu thành công");
+
+            //khi cap nhat xong thi chuyen ve Index
+            return RedirectToAction("Trash", "Category");
         }
     }
 }

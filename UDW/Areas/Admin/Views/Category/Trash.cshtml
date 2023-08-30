@@ -1,10 +1,8 @@
 ﻿@model IEnumerable<MyClass.Model.Categories>
-
 @{
-    ViewBag.Title = "Tất cả loại sản phẩm";
+    ViewBag.Title = "Danh sách loại hàng đã xóa";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
-
 @section header {
     <link href="~/Public/css/cdn.datatables.net_1.13.6_css_jquery.dataTables.min.css" rel="stylesheet" />
 }
@@ -25,11 +23,10 @@
             <div class="card-header">
                 <div class="row">
                     <div class="col-md-6">
-                        <strong class="text-danger">DANH MỤC LOẠI SẢN PHẨM</strong>
+                        <strong class="text-danger">THÙNG RÁC DANH MỤC LOẠI SẢN PHẨM</strong>
                     </div>
                     <div class="col-md-6 text-right">
-                        <a href="@Url.Action("Create","Category")" class="btn-sm btn-success"> <i class="fa fa-plus"></i>Thêm</a>
-                        <a href="@Url.Action("Trash","Category")" class="btn-sm btn-danger"> <i class="fa fa-trash"></i>Thùng rác</a>
+                        <a href="@Url.Action("Index","Category")" class="btn-sm btn-info"> <i class="fa fa-long-arrow-alt-left"></i> Quay lại</a>
                     </div>
 
                 </div>
@@ -61,17 +58,8 @@
                                 <td>@Html.DisplayFor(modelItem => item.Order)</td>
                                 <td>@Html.DisplayFor(modelItem => item.Id)</td>
                                 <td>
-                                    @if (item.Status == 1)
-                                    {
-                                        <a href="@Url.Action("Status","Category", new { id = item.Id })" class="btn-sm btn-success"> <i class="fa fa-toggle-on"></i></a>
-                                    }
-                                    else
-                                    {
-                                        <a href="@Url.Action("Status","Category", new { id = item.Id })" class="btn-sm btn-danger"> <i class="fa fa-toggle-off"></i></a>
-                                    }
-                                    <a href="@Url.Action("Details","Category", new { id = item.Id })" class="btn-sm btn-primary"> <i class="fa fa-eye"></i></a>
-                                    <a href="@Url.Action("Edit","Category", new { id = item.Id })" class="btn-sm btn-info"> <i class="fa fa-edit"></i></a>
-                                    <a href="@Url.Action("DelTrash","Category", new { id = item.Id })" class="btn-sm btn-danger"> <i class="fa fa-trash"></i></a>
+                                    <a href="@Url.Action("Recover","Category", new { id = item.Id })" class="btn-sm btn-info"> <i class="fa fa-undo"></i></a>
+                                    <a href="@Url.Action("Delete","Category", new { id = item.Id })" class="btn-sm btn-danger"> <i class="fa fa-trash"></i></a>
                                 </td>
                             </tr>
                         }
