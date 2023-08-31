@@ -296,14 +296,6 @@
     <Content Include="Public\img\product\review-1.png" />
     <Content Include="Public\img\product\review-2.png" />
     <Content Include="Public\img\product\review-3.png" />
-    <Content Include="Public\img\supplier\r10.jpg" />
-    <Content Include="Public\img\supplier\r12.jpg" />
-    <Content Include="Public\img\supplier\r2.jpg" />
-    <Content Include="Public\img\supplier\r3.jpg" />
-    <Content Include="Public\img\supplier\r5.jpg" />
-    <Content Include="Public\img\supplier\r7.jpg" />
-    <Content Include="Public\img\supplier\r8.jpg" />
-    <Content Include="Public\img\supplier\r9.jpg" />
     <Content Include="Public\js\main.js" />
     <Content Include="Public\plugins\bootstrap-colorpicker\css\bootstrap-colorpicker.css" />
     <Content Include="Public\plugins\bootstrap-colorpicker\css\bootstrap-colorpicker.min.css" />
@@ -2634,6 +2626,7 @@
     <Content Include="Areas\Admin\Views\Supplier\Details.cshtml" />
     <Content Include="Areas\Admin\Views\Supplier\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Supplier\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Category\Trash.cshtml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -2664,6 +2657,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Models\" />
+    <Folder Include="Public\img\supplier\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
