@@ -294,7 +294,7 @@ namespace UDW.Areas.Admin.Controllers
             //Thong bao thanh cong
             TempData["message"] = new XMessage("success", "Phục hồi dữ liệu thành công");
 
-            //khi cap nhat xong thi chuyen ve Index
+            //khi cap nhat xong thi chuyen ve Trash
             return RedirectToAction("Trash", "Category");
         }
     }

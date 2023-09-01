@@ -22,9 +22,9 @@ namespace UDW.Areas.Admin.Controllers
         // GET: Admin/Supplier = INDEX
         public ActionResult Index()
         {
-            return View(db.Suppliers.ToList());
+            return View(suppliersDAO.getList("Index"));//hien thi toan bo danh sach NCC
         }
-        
+
         /////////////////////////////////////////////////////////////////////////////////////
         // GET: Admin/Supplier/Create
         public ActionResult Create()
@@ -36,7 +36,7 @@ namespace UDW.Areas.Admin.Controllers
         // POST: Admin/Supplier/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create( Suppliers suppliers)
+        public ActionResult Create(Suppliers suppliers)
         {
             if (ModelState.IsValid)
             {
@@ -65,7 +65,7 @@ namespace UDW.Areas.Admin.Controllers
                         string slug = suppliers.Slug;
                         //ten file = Slug + phan mo rong cua tap tin
                         string imgName = slug + img.FileName.Substring(img.FileName.LastIndexOf("."));
-                        suppliers.Image= imgName;
+                        suppliers.Image = imgName;
                         //upload hinh
                         string PathDir = "~/Public/img/supplier/";
                         string PathFile = Path.Combine(Server.MapPath(PathDir), imgName);
@@ -89,34 +89,6 @@ namespace UDW.Areas.Admin.Controllers
             return View(suppliers);
         }
 
-        
-
-        // GET: Admin/Supplier/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Suppliers suppliers = db.Suppliers.Find(id);
-            if (suppliers == null)
-            {
-                return HttpNotFound();
-            }
-            return View(suppliers);
-        }
-
-        // POST: Admin/Supplier/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Suppliers suppliers = db.Suppliers.Find(id);
-            db.Suppliers.Remove(suppliers);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
         /////////////////////////////////////////////////////////////////////////////////////
         // GET: Admin/Supplier/Staus/5:Thay doi trang thai cua mau tin
         public ActionResult Status(int? id)
@@ -130,7 +102,7 @@ namespace UDW.Areas.Admin.Controllers
             }
 
             //khi nhap nut thay doi Status cho mot mau tin
-            Suppliers suppliers  = suppliersDAO.getRow(id);
+            Suppliers suppliers = suppliersDAO.getRow(id);
             //kiem tra id cua categories co ton tai?
             if (suppliers == null)
             {
@@ -243,6 +215,116 @@ namespace UDW.Areas.Admin.Controllers
                 return RedirectToAction("Index");
             }
             return View(suppliers);
+        }
+
+        /////////////////////////////////////////////////////////////////////////////////////
+        // GET: Admin/Category/DelTrash/5:Thay doi trang thai cua mau tin = 0
+        public ActionResult DelTrash(int? id)
+        {
+            //khi nhap nut thay doi Status cho mot mau tin
+            Suppliers suppliers = suppliersDAO.getRow(id);
+            //thay doi trang thai Status tu 1,2 thanh 0
+            suppliers.Status = 0;
+
+            //cap nhat gia tri cho UpdateAt/By
+            suppliers.UpdateBy = Convert.ToInt32(Session["UserId"].ToString());
+            suppliers.UpdateAt = DateTime.Now;
+
+            //Goi ham Update trong SupplierDAO
+            suppliersDAO.Update(suppliers);
+
+            //Thong bao thanh cong
+            TempData["message"] = new XMessage("success", "Xóa mẩu tin thành công");
+
+            //khi cap nhat xong thi chuyen ve Index
+            return RedirectToAction("Index", "Supplier");
+        }
+
+        /////////////////////////////////////////////////////////////////////////////////////
+        // GET: Admin/Supplier/Trash/5:Hien thi cac mau tin có gia tri la 0
+        public ActionResult Trash(int? id)
+        {
+            return View(suppliersDAO.getList("Trash"));
+        }
+
+        /////////////////////////////////////////////////////////////////////////////////////
+        // GET: Admin/Supplier/Recover/5:Thay doi trang thai cua mau tin =2
+        public ActionResult Recover(int? id)
+        {
+            if (id == null)
+            {
+                //Thong bao that bai
+                TempData["message"] = new XMessage("danger", "Phục hồi mẩu tin thất bại");
+                //chuyen huong trang
+                return RedirectToAction("Index", "Supplier");
+            }
+
+            //khi nhap nut thay doi Status cho mot mau tin
+            Suppliers suppliers = suppliersDAO.getRow(id);
+            //kiem tra id cua Supplier co ton tai?
+            if (suppliers == null)
+            {
+                //Thong bao that bai
+                TempData["message"] = new XMessage("danger", "Phục hồi mẩu tin thất bại");
+
+                //chuyen huong trang
+                return RedirectToAction("Index", "Supplier");
+            }
+            //thay doi trang thai Status tu 1 thanh 2 va nguoc lai
+            suppliers.Status = 2;
+
+            //cap nhat gia tri cho UpdateAt/By
+            suppliers.UpdateBy = Convert.ToInt32(Session["UserId"].ToString());
+            suppliers.UpdateAt = DateTime.Now;
+
+            //Goi ham Update trong SupplierDAO
+            suppliersDAO.Update(suppliers);
+
+            //Thong bao thanh cong
+            TempData["message"] = new XMessage("success", "Phục hồi mẩu tin thành công");
+
+            //khi cap nhat xong thi chuyen ve Trash
+            return RedirectToAction("Trash", "Supplier");
+        }
+
+        /////////////////////////////////////////////////////////////////////////////////////
+        // GET: Admin/Supplier/Delete/5
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            //Truy van mau tin theo Id
+            Suppliers suppliers = suppliersDAO.getRow(id);
+
+            if (suppliers == null)
+            {
+                return HttpNotFound();
+            }
+            return View(suppliers);
+        }
+
+        // POST: Admin/Supplier/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            //Truy van mau tin theo Id
+            Suppliers suppliers = suppliersDAO.getRow(id);
+
+            if (suppliersDAO.Delete(suppliers) == 1)
+            {
+                //duong dan den anh can xoa
+                string PathDir = "~/Public/img/supplier/";
+                //cap nhat thi phai xoa file cu
+                if (suppliers.Image != null)
+                {
+                    string DelPath = Path.Combine(Server.MapPath(PathDir), suppliers.Image);
+                    System.IO.File.Delete(DelPath);
+                }
+            }
+            return RedirectToAction("Trash");
         }
     }
 }
