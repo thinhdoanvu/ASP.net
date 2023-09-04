@@ -198,6 +198,15 @@ namespace UDW.Areas.Admin.Controllers
                         //upload hinh
                         string PathDir = "~/Public/img/supplier/";
                         string PathFile = Path.Combine(Server.MapPath(PathDir), imgName);
+
+                        //cap nhat thi phai xoa file cu
+                        //Xoa file
+                        if (suppliers.Image != null)
+                        {
+                            string DelPath = Path.Combine(Server.MapPath(PathDir), suppliers.Image);
+                            System.IO.File.Delete(DelPath);
+                        }
+
                         img.SaveAs(PathFile);
                     }
                 }//ket thuc phan upload hinh anh
