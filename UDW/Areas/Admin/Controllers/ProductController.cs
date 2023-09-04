@@ -15,7 +15,7 @@ namespace UDW.Areas.Admin.Controllers
 {
     public class ProductController : Controller
     {
-        ProductDAO productDAO = new ProductDAO();
+        ProductsDAO productDAO = new ProductsDAO();
         SuppliersDAO suppliersDAO = new SuppliersDAO();
         CategoriesDAO categoriesDAO = new CategoriesDAO();
         /////////////////////////////////////////////////////////////////////////////////////

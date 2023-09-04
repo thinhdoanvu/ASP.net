@@ -8,7 +8,7 @@ using MyClass.Model;
 
 namespace MyClass.DAO
 {
-    public class ProductDAO
+    public class ProductsDAO
     {
         private MyDBContext db = new MyDBContext();
         /////////////////////////////////////////////////////////////////////////////////////
