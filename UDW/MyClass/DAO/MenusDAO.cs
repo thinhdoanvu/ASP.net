@@ -8,48 +8,41 @@ using MyClass.Model;
 
 namespace MyClass.DAO
 {
-    public class CategoriesDAO
+    public class MenusDAO
     {
         private MyDBContext db = new MyDBContext();
         /////////////////////////////////////////////////////////////////////////////////////
-        public List<Categories> getList()
-        {
-
-            return db.Categories.ToList();
-        }
-
         //Hien thi danh sach toan bo Loai san pham: SELCT * FROM
-        public List<Categories> getList(string status = "All")
+        public List<Menus> getList(string status = "All")
         {
-            List<Categories> list = null;
+            List<Menus> list = null;
             switch (status)
             {
                 case "Index":
                     {
-                        list = db.Categories
+                        list = db.Menus
                         .Where(m => m.Status != 0)
                         .ToList();
                         break;
                     }
                 case "Trash":
                     {
-                        list = db.Categories
+                        list = db.Menus
                         .Where(m => m.Status == 0)
                         .ToList();
                         break;
                     }
                 default:
                     {
-                        list = db.Categories.ToList();
+                        list = db.Menus.ToList();
                         break;
                     }
             }
             return list;
         }
-
-    /////////////////////////////////////////////////////////////////////////////////////
-    //Hien thi danh sach 1 mau tin (ban ghi)
-    public Categories getRow(int? id)
+        /////////////////////////////////////////////////////////////////////////////////////
+        //Hien thi danh sach 1 mau tin (ban ghi)
+        public Menus getRow(int? id)
         {
             if (id == null)
             {
@@ -57,21 +50,21 @@ namespace MyClass.DAO
             }
             else
             {
-                return db.Categories.Find(id);
+                return db.Menus.Find(id);
             }
         }
 
         /////////////////////////////////////////////////////////////////////////////////////
         ///Them moi mot mau tin
-        public int Insert(Categories row)
+        public int Insert(Menus row)
         {
-            db.Categories.Add(row);
+            db.Menus.Add(row);
             return db.SaveChanges();
         }
 
         /////////////////////////////////////////////////////////////////////////////////////
         ///Cap nhat mot mau tin
-        public int Update(Categories row)
+        public int Update(Menus row)
         {
             db.Entry(row).State = EntityState.Modified;
             return db.SaveChanges();
@@ -79,9 +72,9 @@ namespace MyClass.DAO
 
         /////////////////////////////////////////////////////////////////////////////////////
         ///Xoa mot mau tin Xoa ra khoi CSDL
-        public int Delete(Categories row)
+        public int Delete(Menus row)
         {
-            db.Categories.Remove(row);
+            db.Menus.Remove(row);
             return db.SaveChanges();
         }
     }
