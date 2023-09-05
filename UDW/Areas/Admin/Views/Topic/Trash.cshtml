@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<MyClass.Model.Topics>
 
 @{
-    ViewBag.Title = "Tất cả chủ đề bài viết";
+    ViewBag.Title = "Thùng rác chủ đề bài viết";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
@@ -25,11 +25,10 @@
             <div class="card-header">
                 <div class="row">
                     <div class="col-md-6">
-                        <strong class="text-danger">DANH SÁCH CHỦ ĐỀ BÀI VIẾT</strong>
+                        <strong class="text-danger">THÙNG RÁC CHỦ ĐỀ BÀI VIẾT</strong>
                     </div>
                     <div class="col-md-6 text-right">
-                        <a href="@Url.Action("Create","Topic")" class="btn-sm btn-success"> <i class="fa fa-plus"></i>Thêm</a>
-                        <a href="@Url.Action("Trash","Topic")" class="btn-sm btn-danger"> <i class="fa fa-trash"></i>Thùng rác</a>
+                        <a href="@Url.Action("Index","Topic")" class="btn-sm btn-info"> <i class="fa fa-long-arrow-alt-left"></i> Quay lại</a>
                     </div>
 
                 </div>
@@ -61,17 +60,9 @@
                                 <td>@Html.DisplayFor(modelItem => item.Order)</td>
                                 <td>@Html.DisplayFor(modelItem => item.Id)</td>
                                 <td>
-                                    @if (item.Status == 1)
-                                    {
-                                        <a href="@Url.Action("Status","Topic", new { id = item.Id })" class="btn-sm btn-success"> <i class="fa fa-toggle-on"></i></a>
-                                    }
-                                    else
-                                    {
-                                        <a href="@Url.Action("Status","Topic", new { id = item.Id })" class="btn-sm btn-danger"> <i class="fa fa-toggle-off"></i></a>
-                                    }
-                                    <a href="@Url.Action("Details","Topic", new { id = item.Id })" class="btn-sm btn-primary"> <i class="fa fa-eye"></i></a>
-                                    <a href="@Url.Action("Edit","Topic", new { id = item.Id })" class="btn-sm btn-info"> <i class="fa fa-edit"></i></a>
-                                    <a href="@Url.Action("DelTrash","Topic", new { id = item.Id })" class="btn-sm btn-danger"> <i class="fa fa-trash"></i></a>
+                                    <a href="@Url.Action("Recover","Topic", new { id = item.Id })" class="btn-sm btn-info"> <i class="fa fa-undo"></i></a>
+                                    <a href="@Url.Action("Delete","Topic", new { id = item.Id })" class="btn-sm btn-danger"> <i class="fa fa-trash"></i></a>
+
                                 </td>
                             </tr>
                         }

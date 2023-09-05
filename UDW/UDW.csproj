@@ -2641,6 +2641,7 @@
     <Content Include="Areas\Admin\Views\Topic\Details.cshtml" />
     <Content Include="Areas\Admin\Views\Topic\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Topic\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Topic\Trash.cshtml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

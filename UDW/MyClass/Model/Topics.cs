@@ -21,13 +21,11 @@ namespace MyClass.Model
         [Display(Name = "Liên kết")]
         public string Slug { get; set; }
 
-        [Required(ErrorMessage = "Chủ đề cha không được để trống")]
         [Display(Name = "Cấp cha")]
-        public int ParentId { get; set; }
+        public int? ParentId { get; set; }
 
-        [Required(ErrorMessage = "Sắp xếp không được để trống")]
         [Display(Name = "Sắp xếp")]
-        public int Order { get; set; }
+        public int? Order { get; set; }
 
         [Required(ErrorMessage = "Mô tả không được để trống")]
         [Display(Name = "Mô tả")]
@@ -46,10 +44,10 @@ namespace MyClass.Model
         public DateTime CreateAt { get; set; }
 
         [Display(Name = "Người cập nhật")]
-        public int UpdateBy { get; set; }
+        public int? UpdateBy { get; set; }
 
         [Display(Name = "Ngày cập nhật")]
-        public DateTime UpdateAt { get; set; }
+        public DateTime? UpdateAt { get; set; }
 
         [Display(Name = "Trạng thái")]
         public int Status { get; set; }
