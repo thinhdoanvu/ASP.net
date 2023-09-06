@@ -229,114 +229,122 @@ namespace UDW.Areas.Admin.Controllers
             return View(posts);
         }
 
-        //    /////////////////////////////////////////////////////////////////////////////////////
-        //    // GET: Admin/Category/Delete/5:Xoa mot mau tin ra khoi CSDL
-        //    public ActionResult Delete(int? id)
-        //    {
-        //        if (id == null)
-        //        {
-        //            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //        }
-        //        Categories categories = categoryDAO.getRow(id);
-        //        if (categories == null)
-        //        {
-        //            return HttpNotFound();
-        //        }
-        //        return View(categories);
-        //    }
+        /////////////////////////////////////////////////////////////////////////////////////
+        // GET: Admin/Category/DelTrash/5:Thay doi trang thai cua mau tin = 0
+        public ActionResult DelTrash(int? id)
+        {
+            //khi nhap nut thay doi Status cho mot mau tin
+            Posts posts = postsDAO.getRow(id);
 
-        //    // POST: Admin/Category/Delete/5:Xoa mot mau tin ra khoi CSDL
-        //    [HttpPost, ActionName("Delete")]
-        //    [ValidateAntiForgeryToken]
-        //    public ActionResult DeleteConfirmed(int id)
-        //    {
-        //        Categories categories = categoryDAO.getRow(id);
+            //thay doi trang thai Status tu 1,2 thanh 0
+            posts.Status = 0;
 
-        //        //tim thay mau tin thi xoa, cap nhat cho Links
-        //        if (categoryDAO.Delete(categories) == 1)
-        //        {
-        //            Links links = linksDAO.getRow(categories.Id, "category");
-        //            //Xoa luon cho Links
-        //            linksDAO.Delete(links);
-        //        }
+            //cap nhat gia tri cho UpdateAt/By
+            posts.UpdateBy = Convert.ToInt32(Session["UserId"].ToString());
+            posts.UpdateAt = DateTime.Now;
 
-        //        //Thong bao thanh cong
-        //        TempData["message"] = new XMessage("success", "Xóa danh mục thành công");
-        //        //O lai trang thung rac
-        //        return RedirectToAction("Trash");
-        //    }
+            //Goi ham Update trong CategoryDAO
+            postsDAO.Update(posts);
 
+            //Thong bao thanh cong
+            TempData["message"] = new XMessage("success", "Xóa bài viết thành công");
 
+            //khi cap nhat xong thi chuyen ve Index
+            return RedirectToAction("Index", "Post");
+        }
 
-        //    /////////////////////////////////////////////////////////////////////////////////////
-        //    // GET: Admin/Category/DelTrash/5:Thay doi trang thai cua mau tin = 0
-        //    public ActionResult DelTrash(int? id)
-        //    {
-        //        //khi nhap nut thay doi Status cho mot mau tin
-        //        Categories categories = categoryDAO.getRow(id);
+        /////////////////////////////////////////////////////////////////////////////////////
+        // GET: Admin/Posts/Trash/5:Hien thi cac mau tin có gia tri la 0
+        public ActionResult Trash(int? id)
+        {
+            return View(postsDAO.getList("Trash"));
+        }
 
-        //        //thay doi trang thai Status tu 1,2 thanh 0
-        //        categories.Status = 0;
+        /////////////////////////////////////////////////////////////////////////////////////
+        // GET: Admin/Post/Recover/5:Chuyen trang thai Status = 0 thanh =2
+        public ActionResult Recover(int? id)
+        {
+            if (id == null)
+            {
+                //Thong bao that bai
+                TempData["message"] = new XMessage("danger", "Cập nhật trạng thái thất bại");
+                //chuyen huong trang
+                return RedirectToAction("Index", "Post");
+            }
 
-        //        //cap nhat gia tri cho UpdateAt/By
-        //        categories.UpdateBy = Convert.ToInt32(Session["UserId"].ToString());
-        //        categories.UpdateAt = DateTime.Now;
+            //khi nhap nut thay doi Status cho mot mau tin
+            Posts posts = postsDAO.getRow(id);
+            //kiem tra id cua categories co ton tai?
+            if (posts == null)
+            {
+                //Thong bao that bai
+                TempData["message"] = new XMessage("danger", "Phục hồi dữ liệu thất bại");
 
-        //        //Goi ham Update trong CategoryDAO
-        //        categoryDAO.Update(categories);
+                //chuyen huong trang
+                return RedirectToAction("Index", "Post");
+            }
+            //thay doi trang thai Status tu 1 thanh 2 va nguoc lai
+            posts.Status = 2;
 
-        //        //Thong bao thanh cong
-        //        TempData["message"] = new XMessage("success", "Xóa mẩu tin thành công");
+            //cap nhat gia tri cho UpdateAt/By
+            posts.UpdateBy = Convert.ToInt32(Session["UserId"].ToString());
+            posts.UpdateAt = DateTime.Now;
 
-        //        //khi cap nhat xong thi chuyen ve Index
-        //        return RedirectToAction("Index", "Category");
-        //    }
+            //Goi ham Update trong postsDAO
+            postsDAO.Update(posts);
 
-        //    /////////////////////////////////////////////////////////////////////////////////////
-        //    // GET: Admin/Category/Trash/5:Hien thi cac mau tin có gia tri la 0
-        //    public ActionResult Trash(int? id)
-        //    {
-        //        return View(categoryDAO.getList("Trash"));
-        //    }
+            //Thong bao thanh cong
+            TempData["message"] = new XMessage("success", "Phục hồi dữ liệu thành công");
 
-        //    /////////////////////////////////////////////////////////////////////////////////////
-        //    // GET: Admin/Category/Recover/5:Chuyen trang thai Status = 0 thanh =2
-        //    public ActionResult Recover(int? id)
-        //    {
-        //        if (id == null)
-        //        {
-        //            //Thong bao that bai
-        //            TempData["message"] = new XMessage("danger", "Cập nhật trạng thái thất bại");
-        //            //chuyen huong trang
-        //            return RedirectToAction("Index", "Category");
-        //        }
+            //khi cap nhat xong thi chuyen ve Trash
+            return RedirectToAction("Trash", "Post");
+        }
 
-        //        //khi nhap nut thay doi Status cho mot mau tin
-        //        Categories categories = categoryDAO.getRow(id);
-        //        //kiem tra id cua categories co ton tai?
-        //        if (categories == null)
-        //        {
-        //            //Thong bao that bai
-        //            TempData["message"] = new XMessage("danger", "Phục hồi dữ liệu thất bại");
+        /////////////////////////////////////////////////////////////////////////////////////
+        // GET: Admin/Post/Delete/5:Xoa mot mau tin ra khoi CSDL
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Posts posts = postsDAO.getRow(id);
+            if (posts == null)
+            {
+                return HttpNotFound();
+            }
+            return View(posts);
+        }
 
-        //            //chuyen huong trang
-        //            return RedirectToAction("Index", "Category");
-        //        }
-        //        //thay doi trang thai Status tu 1 thanh 2 va nguoc lai
-        //        categories.Status = 2;
+        // POST: Admin/Category/Delete/5:Xoa mot mau tin ra khoi CSDL
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            Posts posts = postsDAO.getRow(id);
 
-        //        //cap nhat gia tri cho UpdateAt/By
-        //        categories.UpdateBy = Convert.ToInt32(Session["UserId"].ToString());
-        //        categories.UpdateAt = DateTime.Now;
+            //tim thay mau tin thi xoa, cap nhat cho Links
+            if (postsDAO.Delete(posts) == 1)
+            {
+                Links links = linksDAO.getRow(posts.Id, "post");
+                //Xoa luon cho Links
+                linksDAO.Delete(links);
 
-        //        //Goi ham Update trong CategoryDAO
-        //        categoryDAO.Update(categories);
+                //duong dan den anh can xoa
+                string PathDir = "~/Public/img/post/";
+                //cap nhat thi phai xoa file cu
+                if (posts.Image != null)
+                {
+                    string DelPath = Path.Combine(Server.MapPath(PathDir), posts.Image);
+                    System.IO.File.Delete(DelPath);
+                }
+            }
 
-        //        //Thong bao thanh cong
-        //        TempData["message"] = new XMessage("success", "Phục hồi dữ liệu thành công");
+            //Thong bao thanh cong
+            TempData["message"] = new XMessage("success", "Xóa danh mục thành công");
+            //O lai trang thung rac
+            return RedirectToAction("Trash");
+        }
 
-        //        //khi cap nhat xong thi chuyen ve Trash
-        //        return RedirectToAction("Trash", "Category");
-        //    }
     }
 }
