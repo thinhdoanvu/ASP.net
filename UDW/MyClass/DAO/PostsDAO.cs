@@ -58,6 +58,15 @@ namespace MyClass.DAO
         }
 
         /////////////////////////////////////////////////////////////////////////////////////
+        //Hien thi danh sach 1 mau tin (ban ghi)
+        public Posts getRow (string slug)
+        {
+            return db.Posts
+                .Where(m => m.Slug == slug && m.Status == 1)
+                .FirstOrDefault();
+        }
+
+        /////////////////////////////////////////////////////////////////////////////////////
         ///Them moi mot mau tin
         public int Insert(Posts row)
         {

@@ -135,6 +135,10 @@
     <Compile Include="Areas\Admin\Controllers\ProductController.cs" />
     <Compile Include="Areas\Admin\Controllers\SupplierController.cs" />
     <Compile Include="Areas\Admin\Controllers\TopicController.cs" />
+    <Compile Include="Controllers\GiohangController.cs" />
+    <Compile Include="Controllers\LienheController.cs" />
+    <Compile Include="Controllers\ModuleController.cs" />
+    <Compile Include="Controllers\TimkiemController.cs" />
     <Compile Include="Controllers\SiteController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -2687,6 +2691,10 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\Shared\_LayoutSite.cshtml" />
     <Content Include="Views\Site\Index.cshtml" />
+    <Content Include="Views\Site\Home.cshtml" />
+    <Content Include="Views\Module\MainMenu.cshtml" />
+    <Content Include="Views\Module\MainMenuSub_0.cshtml" />
+    <Content Include="Views\Module\MainMenuSub_1.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2695,6 +2703,9 @@
     <Folder Include="Public\img\page\" />
     <Folder Include="Public\img\post\" />
     <Folder Include="Public\img\supplier\" />
+    <Folder Include="Views\Giohang\" />
+    <Folder Include="Views\Lienhe\" />
+    <Folder Include="Views\Timkiem\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

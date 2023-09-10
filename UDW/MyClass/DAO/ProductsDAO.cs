@@ -55,6 +55,17 @@ namespace MyClass.DAO
         }
 
         /////////////////////////////////////////////////////////////////////////////////////
+        //Hien thi danh sach 1 mau tin (ban ghi)
+        public Products getRow(string slug)
+        {
+
+            return db.Products
+                .Where(m=>m.Slug == slug && m.Status ==1)
+                .FirstOrDefault();
+
+        }
+
+        /////////////////////////////////////////////////////////////////////////////////////
         ///Them moi mot mau tin
         public int Insert(Products row)
         {
