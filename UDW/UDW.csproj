@@ -2703,6 +2703,8 @@
     <Content Include="Views\Module\MainMenuSub_0.cshtml" />
     <Content Include="Views\Module\MainMenuSub_1.cshtml" />
     <Content Include="Views\Module\Slider.cshtml" />
+    <Content Include="Views\Site\ProductCategory.cshtml" />
+    <Content Include="Views\Module\CategoriesList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

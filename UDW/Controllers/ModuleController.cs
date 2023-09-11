@@ -37,11 +37,21 @@ namespace UDW.Controllers
                 return View("MainMenuSub_1", list);
             }
         }
+
+        ///////////////////////////////////////////////////////////////////////////
         public ActionResult Slider()
         {
             SlidersDAO slidersDAO = new SlidersDAO();
             List<Sliders> list = slidersDAO.getListByPosition("slider");//ten ham dat tuy y
             return View("Slider", list);
+        }
+
+        ///////////////////////////////////////////////////////////////////////////
+        public ActionResult CategoriesList()
+        {
+            CategoriesDAO categoriesDAO = new CategoriesDAO();
+            List<Categories> list = categoriesDAO.getListByPareantId(0);
+            return View("CategoriesList", list);
         }
     }
 }

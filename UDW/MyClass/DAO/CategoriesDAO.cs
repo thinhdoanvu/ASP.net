@@ -18,6 +18,15 @@ namespace MyClass.DAO
             return db.Categories.ToList();
         }
 
+        /////////////////////////////////////////////////////////////////////////////////////
+        public List<Categories> getListByPareantId(int parentid = 0)
+        {
+            return db.Categories
+                .Where(m=>m.ParentID == parentid && m.Status ==1)
+                .OrderBy(m=>m.Order)
+                .ToList();
+        }
+
         //Hien thi danh sach toan bo Loai san pham: SELCT * FROM
         public List<Categories> getList(string status = "All")
         {
