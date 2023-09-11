@@ -13,46 +13,43 @@ using System.IO;
 
 namespace UDW.Areas.Admin.Controllers
 {
-    public class SupplierController : Controller
+    public class SliderController : Controller
     {
-        private MyDBContext db = new MyDBContext();
-
-        SuppliersDAO suppliersDAO = new SuppliersDAO();
+        SlidersDAO slidersDAO = new SlidersDAO();
         /////////////////////////////////////////////////////////////////////////////////////
         // GET: Admin/Supplier = INDEX
         public ActionResult Index()
         {
-            return View(suppliersDAO.getList("Index"));//hien thi toan bo danh sach NCC
+            return View(slidersDAO.getList("Index"));//hien thi toan bo danh sach Slider
         }
 
         /////////////////////////////////////////////////////////////////////////////////////
-        // GET: Admin/Supplier/Create
+        // GET: Admin/Slider/Create
         public ActionResult Create()
         {
-            ViewBag.OrderList = new SelectList(suppliersDAO.getList("Index"), "Order", "Name");
+            ViewBag.OrderList = new SelectList(slidersDAO.getList("Index"), "Order", "Name");
             return View();
         }
 
-        // POST: Admin/Supplier/Create
+        // POST: Admin/Slider/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Suppliers suppliers)
+        public ActionResult Create(Sliders sliders)
         {
             if (ModelState.IsValid)
             {
-                //Xu ly cho muc Slug
-                suppliers.Slug = XString.Str_Slug(suppliers.Name);
-                //chuyen doi dua vao truong Name de loai bo dau, khoang cach = dau -
-
                 //Xu ly cho muc Order
-                if (suppliers.Order == null)
+                if (sliders.Order == null)
                 {
-                    suppliers.Order = 1;
+                    sliders.Order = 1;
                 }
                 else
                 {
-                    suppliers.Order = suppliers.Order + 1;
+                    sliders.Order = sliders.Order + 1;
                 }
+
+                //Xu ly cho muc Slug
+                string slug = XString.Str_Slug(sliders.Name);
 
                 //xu ly cho phan upload hình ảnh
                 var img = Request.Files["img"];//lay thong tin file
@@ -62,31 +59,30 @@ namespace UDW.Areas.Admin.Controllers
                     //kiem tra tap tin co hay khong
                     if (FileExtentions.Contains(img.FileName.Substring(img.FileName.LastIndexOf("."))))//lay phan mo rong cua tap tin
                     {
-                        string slug = suppliers.Slug;
                         //ten file = Slug + phan mo rong cua tap tin
-                        string imgName = slug + img.FileName.Substring(img.FileName.LastIndexOf("."));
-                        suppliers.Image = imgName;
+                        string imgName = slug + sliders.Id+ img.FileName.Substring(img.FileName.LastIndexOf("."));
+                        sliders.Image = imgName;
                         //upload hinh
-                        string PathDir = "~/Public/img/supplier/";
+                        string PathDir = "~/Public/img/slider/";
                         string PathFile = Path.Combine(Server.MapPath(PathDir), imgName);
                         img.SaveAs(PathFile);
                     }
                 }//ket thuc phan upload hinh anh
 
                 //Xu ly cho muc CreateAt
-                suppliers.CreateAt = DateTime.Now;
+                sliders.CreateAt = DateTime.Now;
 
                 //Xu ly cho muc CreateBy
-                suppliers.CreateBy = Convert.ToInt32(Session["UserId"]);
+                sliders.CreateBy = Convert.ToInt32(Session["UserId"]);
 
-                suppliersDAO.Insert(suppliers);
+                slidersDAO.Insert(sliders);
 
                 //Thong bao thanh cong
                 TempData["message"] = new XMessage("success", "Thêm danh mục thành công");
                 return RedirectToAction("Index");
             }
-            ViewBag.OrderList = new SelectList(suppliersDAO.getList("Index"), "Order", "Name");
-            return View(suppliers);
+            ViewBag.OrderList = new SelectList(slidersDAO.getList("Index"), "Order", "Name");
+            return View(sliders);
         }
 
         /////////////////////////////////////////////////////////////////////////////////////
@@ -98,89 +94,89 @@ namespace UDW.Areas.Admin.Controllers
                 //Thong bao that bai
                 TempData["message"] = new XMessage("danger", "Cập nhật trạng thái thất bại");
                 //chuyen huong trang
-                return RedirectToAction("Index", "Supplier");
+                return RedirectToAction("Index", "Slider");
             }
 
             //khi nhap nut thay doi Status cho mot mau tin
-            Suppliers suppliers = suppliersDAO.getRow(id);
-            //kiem tra id cua categories co ton tai?
-            if (suppliers == null)
+            Sliders sliders = slidersDAO.getRow(id);
+            //kiem tra id cua sliders co ton tai?
+            if (sliders == null)
             {
                 //Thong bao that bai
                 TempData["message"] = new XMessage("danger", "Cập nhật trạng thái thất bại");
 
                 //chuyen huong trang
-                return RedirectToAction("Index", "Category");
+                return RedirectToAction("Index", "Slider");
             }
             //thay doi trang thai Status tu 1 thanh 2 va nguoc lai
-            suppliers.Status = (suppliers.Status == 1) ? 2 : 1;
+            sliders.Status = (sliders.Status == 1) ? 2 : 1;
 
             //cap nhat gia tri cho UpdateAt/By
-            suppliers.UpdateBy = Convert.ToInt32(Session["UserId"].ToString());
-            suppliers.UpdateAt = DateTime.Now;
+            sliders.UpdateBy = Convert.ToInt32(Session["UserId"].ToString());
+            sliders.UpdateAt = DateTime.Now;
 
             //Goi ham Update trong CategoryDAO
-            suppliersDAO.Update(suppliers);
+            slidersDAO.Update(sliders);
 
             //Thong bao thanh cong
             TempData["message"] = new XMessage("success", "Cập nhật trạng thái thành công");
 
             //khi cap nhat xong thi chuyen ve Index
-            return RedirectToAction("Index", "Supplier");
+            return RedirectToAction("Index", "Slider");
         }
 
         /////////////////////////////////////////////////////////////////////////////////////
-        // GET: Admin/Supplier/Details/5
+        // GET: Admin/Slider/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Suppliers suppliers = suppliersDAO.getRow(id);
-            if (suppliers == null)
+            Sliders sliders = slidersDAO.getRow(id);
+            if (sliders == null)
             {
                 return HttpNotFound();
             }
-            return View(suppliers);
+            return View(sliders);
         }
 
         /////////////////////////////////////////////////////////////////////////////////////
-        // GET: Admin/Supplier/Edit/5
+        // GET: Admin/Slider/Edit/5
         public ActionResult Edit(int? id)
         {
-            ViewBag.OrderList = new SelectList(suppliersDAO.getList("Index"), "Order", "Name");
+            ViewBag.OrderList = new SelectList(slidersDAO.getList("Index"), "Order", "Name");
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Suppliers suppliers = suppliersDAO.getRow(id);
-            if (suppliers == null)
+            Sliders sliders = slidersDAO.getRow(id);
+            if (sliders == null)
             {
                 return HttpNotFound();
             }
-            return View(suppliers);
+            return View(sliders);
         }
 
-        // POST: Admin/Supplier/Edit/5
+        // POST: Admin/Slider/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Suppliers suppliers)
+        public ActionResult Edit(Sliders sliders)
         {
             if (ModelState.IsValid)
             {
                 //Xu ly cho muc Slug
-                suppliers.Slug = XString.Str_Slug(suppliers.Name);
+                string slug = XString.Str_Slug(sliders.Name);
                 //chuyen doi dua vao truong Name de loai bo dau, khoang cach = dau -
 
                 //Xu ly cho muc Order
-                if (suppliers.Order == null)
+                if (sliders.Order == null)
                 {
-                    suppliers.Order = 1;
+                    sliders.Order = 1;
                 }
                 else
                 {
-                    suppliers.Order = suppliers.Order + 1;
+                    sliders.Order = sliders.Order + 1;
                 }
 
                 //xu ly cho phan upload hình ảnh
@@ -191,19 +187,18 @@ namespace UDW.Areas.Admin.Controllers
                     //kiem tra tap tin co hay khong
                     if (FileExtentions.Contains(img.FileName.Substring(img.FileName.LastIndexOf("."))))//lay phan mo rong cua tap tin
                     {
-                        string slug = suppliers.Slug;
                         //ten file = Slug + phan mo rong cua tap tin
-                        string imgName = slug + img.FileName.Substring(img.FileName.LastIndexOf("."));
-                        suppliers.Image = imgName;
+                        string imgName = slug + sliders.Id +img.FileName.Substring(img.FileName.LastIndexOf("."));
+                        sliders.Image = imgName;
                         //upload hinh
-                        string PathDir = "~/Public/img/supplier/";
+                        string PathDir = "~/Public/img/slider/";
                         string PathFile = Path.Combine(Server.MapPath(PathDir), imgName);
 
                         //cap nhat thi phai xoa file cu
                         //Xoa file
-                        if (suppliers.Image != null)
+                        if (sliders.Image != null)
                         {
-                            string DelPath = Path.Combine(Server.MapPath(PathDir), suppliers.Image);
+                            string DelPath = Path.Combine(Server.MapPath(PathDir), sliders.Image);
                             System.IO.File.Delete(DelPath);
                         }
 
@@ -212,92 +207,92 @@ namespace UDW.Areas.Admin.Controllers
                 }//ket thuc phan upload hinh anh
 
                 //Xu ly cho muc UpdateAt
-                suppliers.UpdateAt = DateTime.Now;
+                sliders.UpdateAt = DateTime.Now;
 
                 //Xu ly cho muc UpdateBy
-                suppliers.UpdateBy = Convert.ToInt32(Session["UserId"]);
+                sliders.UpdateBy = Convert.ToInt32(Session["UserId"]);
 
-                suppliersDAO.Update(suppliers);
+                slidersDAO.Update(sliders);
 
                 //Thong bao thanh cong
                 TempData["message"] = new XMessage("success", "Sửa danh mục thành công");
                 return RedirectToAction("Index");
             }
-            return View(suppliers);
+            return View(sliders);
         }
 
         /////////////////////////////////////////////////////////////////////////////////////
-        // GET: Admin/Category/DelTrash/5:Thay doi trang thai cua mau tin = 0
+        // GET: Admin/Slider/DelTrash/5:Thay doi trang thai cua mau tin = 0
         public ActionResult DelTrash(int? id)
         {
             //khi nhap nut thay doi Status cho mot mau tin
-            Suppliers suppliers = suppliersDAO.getRow(id);
+            Sliders sliders = slidersDAO.getRow(id);
             //thay doi trang thai Status tu 1,2 thanh 0
-            suppliers.Status = 0;
+            sliders.Status = 0;
 
             //cap nhat gia tri cho UpdateAt/By
-            suppliers.UpdateBy = Convert.ToInt32(Session["UserId"].ToString());
-            suppliers.UpdateAt = DateTime.Now;
+            sliders.UpdateBy = Convert.ToInt32(Session["UserId"].ToString());
+            sliders.UpdateAt = DateTime.Now;
 
             //Goi ham Update trong SupplierDAO
-            suppliersDAO.Update(suppliers);
+            slidersDAO.Update(sliders);
 
             //Thong bao thanh cong
             TempData["message"] = new XMessage("success", "Xóa mẩu tin thành công");
 
             //khi cap nhat xong thi chuyen ve Index
-            return RedirectToAction("Index", "Supplier");
+            return RedirectToAction("Index", "Slider");
         }
 
         /////////////////////////////////////////////////////////////////////////////////////
-        // GET: Admin/Supplier/Trash/5:Hien thi cac mau tin có gia tri la 0
+        // GET: Admin/Slider/Trash/5:Hien thi cac mau tin có gia tri la 0
         public ActionResult Trash(int? id)
         {
-            return View(suppliersDAO.getList("Trash"));
+            return View(slidersDAO.getList("Trash"));
         }
 
         /////////////////////////////////////////////////////////////////////////////////////
-        // GET: Admin/Supplier/Recover/5:Thay doi trang thai cua mau tin =2
+        // GET: Admin/Slider/Recover/5:Thay doi trang thai cua mau tin
         public ActionResult Recover(int? id)
         {
             if (id == null)
             {
                 //Thong bao that bai
-                TempData["message"] = new XMessage("danger", "Phục hồi mẩu tin thất bại");
+                TempData["message"] = new XMessage("danger", "Phục hồi danh mục thất bại");
                 //chuyen huong trang
-                return RedirectToAction("Index", "Supplier");
+                return RedirectToAction("Index", "Slider");
             }
 
             //khi nhap nut thay doi Status cho mot mau tin
-            Suppliers suppliers = suppliersDAO.getRow(id);
-            //kiem tra id cua Supplier co ton tai?
-            if (suppliers == null)
+            Sliders sliders = slidersDAO.getRow(id);
+            //kiem tra id cua topics co ton tai?
+            if (sliders == null)
             {
                 //Thong bao that bai
-                TempData["message"] = new XMessage("danger", "Phục hồi mẩu tin thất bại");
+                TempData["message"] = new XMessage("danger", "Phục hồi danh mục thất bại");
 
                 //chuyen huong trang
-                return RedirectToAction("Index", "Supplier");
+                return RedirectToAction("Index", "Page");
             }
-            //thay doi trang thai Status tu 1 thanh 2 va nguoc lai
-            suppliers.Status = 2;
+            //thay doi trang thai Status = 2
+            sliders.Status = 2;
 
             //cap nhat gia tri cho UpdateAt/By
-            suppliers.UpdateBy = Convert.ToInt32(Session["UserId"].ToString());
-            suppliers.UpdateAt = DateTime.Now;
+            sliders.UpdateBy = Convert.ToInt32(Session["UserId"].ToString());
+            sliders.UpdateAt = DateTime.Now;
 
-            //Goi ham Update trong SupplierDAO
-            suppliersDAO.Update(suppliers);
+            //Goi ham Update trong PostsDAO
+            slidersDAO.Update(sliders);
 
             //Thong bao thanh cong
-            TempData["message"] = new XMessage("success", "Phục hồi mẩu tin thành công");
+            TempData["message"] = new XMessage("success", "Phục hồi danh mục thành công");
 
-            //khi cap nhat xong thi chuyen ve Trash
-            return RedirectToAction("Trash", "Supplier");
+            //khi cap nhat xong thi chuyen ve Trash de phuc hoi tiep
+            return RedirectToAction("Trash", "Slider");
         }
 
         /////////////////////////////////////////////////////////////////////////////////////
-        // GET: Admin/Supplier/Delete/5
+        // GET: Admin/Slider/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -305,31 +300,31 @@ namespace UDW.Areas.Admin.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             //Truy van mau tin theo Id
-            Suppliers suppliers = suppliersDAO.getRow(id);
+            Sliders sliders = slidersDAO.getRow(id);
 
-            if (suppliers == null)
+            if (sliders == null)
             {
                 return HttpNotFound();
             }
-            return View(suppliers);
+            return View(sliders);
         }
 
-        // POST: Admin/Supplier/Delete/5
+        // POST: Admin/Slider/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
             //Truy van mau tin theo Id
-            Suppliers suppliers = suppliersDAO.getRow(id);
+            Sliders sliders = slidersDAO.getRow(id);
 
-            if (suppliersDAO.Delete(suppliers) == 1)
+            if (slidersDAO.Delete(sliders) == 1)
             {
                 //duong dan den anh can xoa
-                string PathDir = "~/Public/img/supplier/";
+                string PathDir = "~/Public/img/slider/";
                 //cap nhat thi phai xoa file cu
-                if (suppliers.Image != null)
+                if (sliders.Image != null)
                 {
-                    string DelPath = Path.Combine(Server.MapPath(PathDir), suppliers.Image);
+                    string DelPath = Path.Combine(Server.MapPath(PathDir), sliders.Image);
                     System.IO.File.Delete(DelPath);
                 }
             }

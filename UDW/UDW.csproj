@@ -133,6 +133,7 @@
     <Compile Include="Areas\Admin\Controllers\PageController.cs" />
     <Compile Include="Areas\Admin\Controllers\PostController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProductController.cs" />
+    <Compile Include="Areas\Admin\Controllers\SliderController.cs" />
     <Compile Include="Areas\Admin\Controllers\SupplierController.cs" />
     <Compile Include="Areas\Admin\Controllers\TopicController.cs" />
     <Compile Include="Controllers\GiohangController.cs" />
@@ -2666,6 +2667,12 @@
     <Content Include="Areas\Admin\Views\Menu\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Menu\Trash.cshtml" />
     <Content Include="Areas\Admin\Views\Menu\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Slider\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Slider\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Slider\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Slider\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Slider\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Slider\Trash.cshtml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -2695,6 +2702,7 @@
     <Content Include="Views\Module\MainMenu.cshtml" />
     <Content Include="Views\Module\MainMenuSub_0.cshtml" />
     <Content Include="Views\Module\MainMenuSub_1.cshtml" />
+    <Content Include="Views\Module\Slider.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2702,6 +2710,7 @@
     <Folder Include="Models\" />
     <Folder Include="Public\img\page\" />
     <Folder Include="Public\img\post\" />
+    <Folder Include="Public\img\slider\" />
     <Folder Include="Public\img\supplier\" />
     <Folder Include="Views\Giohang\" />
     <Folder Include="Views\Lienhe\" />

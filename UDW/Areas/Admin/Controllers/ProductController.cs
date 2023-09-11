@@ -340,6 +340,9 @@ namespace UDW.Areas.Admin.Controllers
                     System.IO.File.Delete(DelPath);
                 }
             }
+            //Thong bao thanh cong
+            TempData["message"] = new XMessage("success", "Xóa danh mục thành công");
+            //O lai trang thung rac
             return RedirectToAction("Trash");
         }
     }

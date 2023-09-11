@@ -36,7 +36,12 @@ namespace UDW.Controllers
                 ViewBag.Menu2cap = menus;
                 return View("MainMenuSub_1", list);
             }
-            
+        }
+        public ActionResult Slider()
+        {
+            SlidersDAO slidersDAO = new SlidersDAO();
+            List<Sliders> list = slidersDAO.getListByPosition("slider");//ten ham dat tuy y
+            return View("Slider", list);
         }
     }
 }
