@@ -176,7 +176,7 @@ namespace UDW.Controllers
                 }
             }
             ProductsDAO productsDAO = new ProductsDAO();
-            List<Products> list = productsDAO.getListByListCatId(listcatid, 10);
+            List<ProductInfo> list = productsDAO.getListByListCatId(listcatid, 10);
             return View("HomeProduct", list);
         }
     }

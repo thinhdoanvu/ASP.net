@@ -24,7 +24,7 @@ namespace MyClass.Model
 
         [Required(ErrorMessage = "Mã nhà CC không được để trống")]
         [Display(Name = "Mã NCC")]
-        public string SupplierId { get; set; }
+        public int SupplierId { get; set; }
 
         [Display(Name = "Liên kết")]
         public string Slug { get; set; }

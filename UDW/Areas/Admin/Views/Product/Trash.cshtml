@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MyClass.Model.Products>
+﻿@model IEnumerable<MyClass.Model.ProductInfo>
 @{
     ViewBag.Title = "Danh sách sản phẩm đã xóa";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
@@ -53,8 +53,8 @@
                             <tr>
                                 <td><input type="checkbox" name="checkid" value="" /></td>
                                 <td>@Html.DisplayFor(modelItem => item.Name)</td>
-                                <td>@Html.DisplayFor(modelItem => item.CatID)</td>
-                                <td>@Html.DisplayFor(modelItem => item.SupplierId)</td>
+                                <td>@Html.DisplayFor(modelItem => item.CatName)</td>
+                                <td>@Html.DisplayFor(modelItem => item.SupplierName)</td>
                                 <td><img src="~/Public/img/product/@item.Image" alt="Img" class="img-fluid" /></td>
                                 <td>@Html.DisplayFor(modelItem => item.Amount)</td>
                                 <td>@Html.DisplayFor(modelItem => item.Price)</td>

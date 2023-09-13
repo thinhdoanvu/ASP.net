@@ -26,10 +26,44 @@ namespace MyClass.DAO
 
         /////////////////////////////////////////////////////////////////////////////////////
         //Hien thi danh sach toan bo san pham theo tung Categories (catid)
-        public List<Products> getListByListCatId(List<int> listcatid, int limit)
+        //danh cho trang HOME
+        public List<ProductInfo> getListByListCatId(List<int> listcatid, int limit)
         {
-            List<Products> list = db.Products
-                .Where(m=> m.Status == 1 && listcatid.Contains(m.CatID))
+            List<ProductInfo> list = db.Products
+                .Join(
+                                db.Categories, // Bảng Categories
+                                p => p.CatID, // Khóa ngoại của Products liên kết với Categories
+                                c => c.Id, // Khóa chính của Categories
+                                (p, c) => new { Product = p, Category = c } // Kết hợp Products và Categories
+                            )
+                            .Join(
+                                db.Suppliers, // Bảng Suppliers
+                                pc => pc.Product.SupplierId, // Khóa ngoại của Product/Category liên kết với Suppliers
+                                s => s.Id, // Khóa chính của Suppliers
+                                (pc, s) => new ProductInfo
+                                {
+                                    Id = pc.Product.Id,
+                                    CatID = pc.Product.CatID,
+                                    Name = pc.Product.Name,
+                                    CatName = pc.Category.Name, // Lấy tên danh mục từ bảng Categories
+                                    SupplierId = pc.Product.SupplierId,
+                                    SupplierName = s.Name, // Lấy tên nhà cung cấp từ bảng Suppliers
+                                    Slug = pc.Product.Slug,
+                                    Detail = pc.Product.Detail,
+                                    Image = pc.Product.Image,
+                                    Price = pc.Product.Price,
+                                    SalePrice = pc.Product.SalePrice,
+                                    Amount = pc.Product.Amount,
+                                    MetaDesc = pc.Product.MetaDesc,
+                                    MetaKey = pc.Product.MetaKey,
+                                    CreateBy = pc.Product.CreateBy,
+                                    CreateAt = pc.Product.CreateAt,
+                                    UpdateBy = pc.Product.UpdateBy,
+                                    UpdateAt = pc.Product.UpdateAt,
+                                    Status = pc.Product.Status
+                                }
+                            )
+                .Where(m => m.Status == 1 && listcatid.Contains(m.CatID))
                 .Take(limit)
                 .OrderByDescending(m => m.CreateBy)
                 .ToList();
@@ -38,33 +72,136 @@ namespace MyClass.DAO
 
         /////////////////////////////////////////////////////////////////////////////////////
         //Hien thi danh sach toan bo Loai san pham: SELCT * FROM
-        public List<Products> getList(string status = "All")
+        //danh cho trang Quan tri
+        public List<ProductInfo> getList(string status = "All")
         {
-            List<Products> list = null;
+            List<ProductInfo> list = null;
             switch (status)
             {
                 case "Index":
                     {
                         list = db.Products
-                        .Where(m => m.Status != 0)
-                        .ToList();
+                            .Where(p => p.Status != 0)
+                            .Join(
+                                db.Categories, // Bảng Categories
+                                p => p.CatID, // Khóa ngoại của Products liên kết với Categories
+                                c => c.Id, // Khóa chính của Categories
+                                (p, c) => new { Product = p, Category = c } // Kết hợp Products và Categories
+                            )
+                            .Join(
+                                db.Suppliers, // Bảng Suppliers
+                                pc => pc.Product.SupplierId, // Khóa ngoại của Product/Category liên kết với Suppliers
+                                s => s.Id, // Khóa chính của Suppliers
+                                (pc, s) => new ProductInfo
+                                {
+                                    Id = pc.Product.Id,
+                                    CatID = pc.Product.CatID,
+                                    Name = pc.Product.Name,
+                                    CatName = pc.Category.Name, // Lấy tên danh mục từ bảng Categories
+                                    SupplierId = pc.Product.SupplierId,
+                                    SupplierName = s.Name, // Lấy tên nhà cung cấp từ bảng Suppliers
+                                    Slug = pc.Product.Slug,
+                                    Detail = pc.Product.Detail,
+                                    Image = pc.Product.Image,
+                                    Price = pc.Product.Price,
+                                    SalePrice = pc.Product.SalePrice,
+                                    Amount = pc.Product.Amount,
+                                    MetaDesc = pc.Product.MetaDesc,
+                                    MetaKey = pc.Product.MetaKey,
+                                    CreateBy = pc.Product.CreateBy,
+                                    CreateAt = pc.Product.CreateAt,
+                                    UpdateBy = pc.Product.UpdateBy,
+                                    UpdateAt = pc.Product.UpdateAt,
+                                    Status = pc.Product.Status
+                                }
+                            )
+                            .ToList();
                         break;
                     }
                 case "Trash":
                     {
                         list = db.Products
-                        .Where(m => m.Status == 0)
-                        .ToList();
+                            .Where(p => p.Status == 0)
+                            .Join(
+                                db.Categories, // Bảng Categories
+                                p => p.CatID, // Khóa ngoại của Products liên kết với Categories
+                                c => c.Id, // Khóa chính của Categories
+                                (p, c) => new { Product = p, Category = c } // Kết hợp Products và Categories
+                            )
+                            .Join(
+                                db.Suppliers, // Bảng Suppliers
+                                pc => pc.Product.SupplierId, // Khóa ngoại của Product/Category liên kết với Suppliers
+                                s => s.Id, // Khóa chính của Suppliers
+                                (pc, s) => new ProductInfo
+                                {
+                                    Id = pc.Product.Id,
+                                    CatID = pc.Product.CatID,
+                                    Name = pc.Product.Name,
+                                    CatName = pc.Category.Name, // Lấy tên danh mục từ bảng Categories
+                                    SupplierId = pc.Product.SupplierId,
+                                    SupplierName = s.Name, // Lấy tên nhà cung cấp từ bảng Suppliers
+                                    Slug = pc.Product.Slug,
+                                    Detail = pc.Product.Detail,
+                                    Image = pc.Product.Image,
+                                    Price = pc.Product.Price,
+                                    SalePrice = pc.Product.SalePrice,
+                                    Amount = pc.Product.Amount,
+                                    MetaDesc = pc.Product.MetaDesc,
+                                    MetaKey = pc.Product.MetaKey,
+                                    CreateBy = pc.Product.CreateBy,
+                                    CreateAt = pc.Product.CreateAt,
+                                    UpdateBy = pc.Product.UpdateBy,
+                                    UpdateAt = pc.Product.UpdateAt,
+                                    Status = pc.Product.Status
+                                }
+                            )
+                            .ToList();
                         break;
                     }
+                // Các trường hợp khác xử lý tương tự
                 default:
                     {
-                        list = db.Products.ToList();
+                        list = db.Products
+                            .Join(
+                                db.Categories,
+                                p => p.CatID,
+                                c => c.Id,
+                                (p, c) => new { Product = p, Category = c }
+                            )
+                            .Join(
+                                db.Suppliers,
+                                pc => pc.Product.SupplierId,
+                                s => s.Id,
+                                (pc, s) => new ProductInfo
+                                {
+                                    Id = pc.Product.Id,
+                                    CatID = pc.Product.CatID,
+                                    Name = pc.Product.Name,
+                                    CatName = pc.Category.Name,
+                                    SupplierId = pc.Product.SupplierId,
+                                    SupplierName = s.Name,
+                                    Slug = pc.Product.Slug,
+                                    Detail = pc.Product.Detail,
+                                    Image = pc.Product.Image,
+                                    Price = pc.Product.Price,
+                                    SalePrice = pc.Product.SalePrice,
+                                    Amount = pc.Product.Amount,
+                                    MetaDesc = pc.Product.MetaDesc,
+                                    MetaKey = pc.Product.MetaKey,
+                                    CreateBy = pc.Product.CreateBy,
+                                    CreateAt = pc.Product.CreateAt,
+                                    UpdateBy = pc.Product.UpdateBy,
+                                    UpdateAt = pc.Product.UpdateAt,
+                                    Status = pc.Product.Status
+                                }
+                            )
+                            .ToList();
                         break;
                     }
             }
             return list;
         }
+
         /////////////////////////////////////////////////////////////////////////////////////
         //Hien thi danh sach 1 mau tin (ban ghi)
         public Products getRow(int? id)
@@ -85,7 +222,7 @@ namespace MyClass.DAO
         {
 
             return db.Products
-                .Where(m=>m.Slug == slug && m.Status ==1)
+                .Where(m => m.Slug == slug && m.Status == 1)
                 .FirstOrDefault();
 
         }
