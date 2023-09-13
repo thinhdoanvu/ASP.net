@@ -83,7 +83,9 @@ namespace UDW.Controllers
         //Trang chu
         public ActionResult Home()
         {
-            return View("Home");
+            CategoriesDAO categoriesDAO = new CategoriesDAO();
+            List<Categories> list = categoriesDAO.getListByPareantId(0);
+            return View("Home",list);
         }
 
         /////////////////////////////////////////////////////////////////////////////
@@ -140,6 +142,42 @@ namespace UDW.Controllers
         public ActionResult PostDetail(Posts posts)
         {
             return View("PostDetail");
+        }
+
+        /////////////////////////////////////////////////////////////////////////////
+        //HomeProduct
+        public ActionResult HomeProduct(int id)
+        {
+            CategoriesDAO categoriesDAO = new CategoriesDAO();
+            Categories categories = categoriesDAO.getRow(id);
+            ViewBag.Categories = categories;
+            //hien thi toan bo cac shan pham ung voi tung loai
+            //hien thi theo 3 cap: cha - con - con cua con
+            List<int> listcatid = new List<int>();
+            //cap 1
+            listcatid.Add(id);
+
+            //cap 2
+            List<Categories> listcategories2 = categoriesDAO.getListByPareantId(id);
+            if (listcategories2.Count()!=0)
+            {
+                foreach (var categories2 in listcategories2)
+                {
+                    listcatid.Add(categories2.Id);
+                    //cap 3
+                    List<Categories> listcategories3 = categoriesDAO.getListByPareantId(categories2.Id);
+                    if (listcategories3.Count() != 0)
+                    {
+                        foreach (var categories3 in listcategories3)
+                        {
+                            listcatid.Add(categories3.Id);
+                        }
+                    }
+                }
+            }
+            ProductsDAO productsDAO = new ProductsDAO();
+            List<Products> list = productsDAO.getListByListCatId(listcatid, 10);
+            return View("HomeProduct", list);
         }
     }
 }

@@ -11,6 +11,31 @@ namespace MyClass.DAO
     public class ProductsDAO
     {
         private MyDBContext db = new MyDBContext();
+
+        /////////////////////////////////////////////////////////////////////////////////////
+        //Hien thi danh sach toan bo san pham theo tung Categories (catid)
+        public List<Products> getListByCatId(int catid, int limit)
+        {
+            List<Products> list = db.Products
+                .Where(m => m.CatID == catid && m.Status == 1)
+                .Take(limit)
+                .OrderByDescending(m => m.CreateBy)
+                .ToList();
+            return list;
+        }
+
+        /////////////////////////////////////////////////////////////////////////////////////
+        //Hien thi danh sach toan bo san pham theo tung Categories (catid)
+        public List<Products> getListByListCatId(List<int> listcatid, int limit)
+        {
+            List<Products> list = db.Products
+                .Where(m=> m.Status == 1 && listcatid.Contains(m.CatID))
+                .Take(limit)
+                .OrderByDescending(m => m.CreateBy)
+                .ToList();
+            return list;
+        }
+
         /////////////////////////////////////////////////////////////////////////////////////
         //Hien thi danh sach toan bo Loai san pham: SELCT * FROM
         public List<Products> getList(string status = "All")

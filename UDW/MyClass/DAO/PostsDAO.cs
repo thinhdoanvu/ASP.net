@@ -35,7 +35,7 @@ namespace MyClass.DAO
                 default:
                     {
                         list = db.Posts
-                            .Where(m=> m.PostType == type)
+                            .Where(m => m.PostType == type)
                             .ToList();
                         break;
                     }
@@ -59,7 +59,7 @@ namespace MyClass.DAO
 
         /////////////////////////////////////////////////////////////////////////////////////
         //Hien thi danh sach 1 mau tin (ban ghi)
-        public Posts getRow (string slug)
+        public Posts getRow(string slug)
         {
             return db.Posts
                 .Where(m => m.Slug == slug && m.Status == 1)

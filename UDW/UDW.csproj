@@ -2705,6 +2705,7 @@
     <Content Include="Views\Module\Slider.cshtml" />
     <Content Include="Views\Site\ProductCategory.cshtml" />
     <Content Include="Views\Module\CategoriesList.cshtml" />
+    <Content Include="Views\Site\HomeProduct.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
