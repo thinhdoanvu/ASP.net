@@ -2706,6 +2706,8 @@
     <Content Include="Views\Site\ProductCategory.cshtml" />
     <Content Include="Views\Module\CategoriesList.cshtml" />
     <Content Include="Views\Site\HomeProduct.cshtml" />
+    <Content Include="Views\Site\Product.cshtml" />
+    <Content Include="Views\Site\ProductDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

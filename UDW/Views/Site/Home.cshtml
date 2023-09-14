@@ -30,35 +30,11 @@
         @*================ Hero banner start =================*@
 
         @*================ Hero Carousel start =================*@
-        <section class="section-margin mt-0">
-            <div class="owl-carousel owl-theme hero-carousel">
-                <div class="hero-carousel__slide">
-                    <img src="Public/img/home/hero-slide1.png" alt="" class="img-fluid">
-                    <a href="#" class="hero-carousel__slideOverlay">
-                        <h3>Wireless Headphone</h3>
-                        <p>Accessories Item</p>
-                    </a>
-                </div>
-                <div class="hero-carousel__slide">
-                    <img src="Public/img/home/hero-slide2.png" alt="" class="img-fluid">
-                    <a href="#" class="hero-carousel__slideOverlay">
-                        <h3>Wireless Headphone</h3>
-                        <p>Accessories Item</p>
-                    </a>
-                </div>
-                <div class="hero-carousel__slide">
-                    <img src="Public/img/home/hero-slide3.png" alt="" class="img-fluid">
-                    <a href="#" class="hero-carousel__slideOverlay">
-                        <h3>Wireless Headphone</h3>
-                        <p>Accessories Item</p>
-                    </a>
-                </div>
-            </div>
-        </section>
+        @Html.Action("Slider", "Module")
         @*================ Hero Carousel end =================*@
 
         @*================ trending product section start =================*@
-
+        @Html.Action("Product", "Site")
         @*================ trending product section end =================*@
         <section class="section-margin calc-60px">
             <div class="container">
@@ -87,7 +63,7 @@
         @*================ offer section end =================*@
 
         @*================ Best Selling item  carousel =================*@
-        @Html.Action("Slider", "Module")
+
         @*================ Best Selling item  carousel end =================*@
 
         @*================ Blog section start =================*@

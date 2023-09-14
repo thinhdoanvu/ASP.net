@@ -61,7 +61,7 @@ namespace UDW.Controllers
                     Products products = productsDAO.getRow(slug);
                     if (products!=null)
                     {
-                        return this.ProductDetail(products);
+                        return this.ProductDetail(slug);
                     }
                     else
                     {
@@ -92,7 +92,9 @@ namespace UDW.Controllers
         //Site/Product
         public ActionResult Product()
         {
-            return View("Product");
+            ProductsDAO productsDAO = new ProductsDAO();
+            List<ProductInfo> list = productsDAO.getListBylimit(10);
+            return View("Product", list);
         }
 
         /////////////////////////////////////////////////////////////////////////////
@@ -106,7 +108,40 @@ namespace UDW.Controllers
         //Site/ProductCategory
         public ActionResult ProductCategory(string slug)
         {
-            return View("ProductCategory");
+            //Lay categories dua vao Slug
+            CategoriesDAO categoriesDAO = new CategoriesDAO();
+            Categories categories = categoriesDAO.getRow(slug);
+            
+            //hien thi noi dung cua mau tin
+            ViewBag.Categories = categories;
+            //hien thi toan bo cac shan pham ung voi tung loai
+            //hien thi theo 3 cap: cha - con - con cua con
+            List<int> listcatid = new List<int>();
+            //cap 1
+            listcatid.Add(categories.Id);
+
+            //cap 2
+            List<Categories> listcategories2 = categoriesDAO.getListByPareantId(categories.Id);
+            if (listcategories2.Count() != 0)
+            {
+                foreach (var categories2 in listcategories2)
+                {
+                    listcatid.Add(categories2.Id);
+                    //cap 3
+                    List<Categories> listcategories3 = categoriesDAO.getListByPareantId(categories2.Id);
+                    if (listcategories3.Count() != 0)
+                    {
+                        foreach (var categories3 in listcategories3)
+                        {
+                            listcatid.Add(categories3.Id);
+                        }
+                    }
+                }
+            }
+
+            ProductsDAO productsDAO = new ProductsDAO();
+            List<ProductInfo> list = productsDAO.getListByListCatId(listcatid, 10);
+            return View("ProductCategory",list);
         }
 
         /////////////////////////////////////////////////////////////////////////////
@@ -132,15 +167,19 @@ namespace UDW.Controllers
 
         /////////////////////////////////////////////////////////////////////////////
         //Product/Details
-        public ActionResult ProductDetail(Products products)
+        public ActionResult ProductDetail(string slug)
         {
-            return View("ProductDetail");
+            // Hiển thị nội dung của sản phẩm
+            ProductsDAO productsDAO = new ProductsDAO();
+            List<ProductInfo> list = productsDAO.GetProductDetailBySlug(slug);
+            return View("ProductDetail", list);
         }
 
         /////////////////////////////////////////////////////////////////////////////
         //Post/Details
         public ActionResult PostDetail(Posts posts)
         {
+            
             return View("PostDetail");
         }
 

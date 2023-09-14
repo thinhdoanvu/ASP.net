@@ -21,8 +21,8 @@ namespace MyClass.DAO
         public List<Categories> getListByPareantId(int parentid = 0)
         {
             return db.Categories
-                .Where(m=>m.ParentID == parentid && m.Status ==1)
-                .OrderBy(m=>m.Order)
+                .Where(m => m.ParentID == parentid && m.Status == 1)
+                .OrderBy(m => m.Order)
                 .ToList();
         }
 
@@ -55,9 +55,9 @@ namespace MyClass.DAO
             return list;
         }
 
-    /////////////////////////////////////////////////////////////////////////////////////
-    //Hien thi danh sach 1 mau tin (ban ghi)
-    public Categories getRow(int? id)
+        /////////////////////////////////////////////////////////////////////////////////////
+        //Hien thi danh sach 1 mau tin (ban ghi)
+        public Categories getRow(int? id)
         {
             if (id == null)
             {
@@ -67,6 +67,16 @@ namespace MyClass.DAO
             {
                 return db.Categories.Find(id);
             }
+        }
+
+        /////////////////////////////////////////////////////////////////////////////////////
+        //Hien thi danh sach 1 mau tin (ban ghi) voi kieu string = slug
+        public Categories getRow(string slug)
+        {
+
+            return db.Categories
+                .Where(m => m.Slug == slug && m.Status == 1)
+                .FirstOrDefault();
         }
 
         /////////////////////////////////////////////////////////////////////////////////////
