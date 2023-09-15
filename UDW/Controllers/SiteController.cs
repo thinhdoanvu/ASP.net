@@ -155,7 +155,9 @@ namespace UDW.Controllers
         //Site/PostPage
         public ActionResult PostPage(string slug)
         {
-            return View("PostPage");
+            PostsDAO postsDAO = new PostsDAO();
+            Posts posts = postsDAO.getRow(slug);
+            return View("PostPage",posts);
         }
 
         /////////////////////////////////////////////////////////////////////////////

@@ -2708,6 +2708,9 @@
     <Content Include="Views\Site\HomeProduct.cshtml" />
     <Content Include="Views\Site\Product.cshtml" />
     <Content Include="Views\Site\ProductDetail.cshtml" />
+    <Content Include="Views\Site\PostPage.cshtml" />
+    <Content Include="Views\Site\PostTopic.cshtml" />
+    <Content Include="Views\Module\MenuFooter.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

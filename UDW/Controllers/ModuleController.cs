@@ -53,5 +53,14 @@ namespace UDW.Controllers
             List<Categories> list = categoriesDAO.getListByPareantId(0);
             return View("CategoriesList", list);
         }
+
+        ///////////////////////////////////////////////////////////////////////////
+        ///Footer Menu
+        public ActionResult MenuFooter()
+        {
+            MenusDAO menusDAO = new MenusDAO();
+            List<Menus> list = menusDAO.getListByParentId(0,"Footer");
+            return View("MenuFooter",list);
+        }
     }
 }
