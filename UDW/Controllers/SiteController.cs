@@ -169,9 +169,21 @@ namespace UDW.Controllers
         //Product/Details
         public ActionResult ProductDetail(string slug)
         {
-            // Hiển thị nội dung của sản phẩm
+            // Hien thi noi dung cua san pham
             ProductsDAO productsDAO = new ProductsDAO();
             List<ProductInfo> list = productsDAO.GetProductDetailBySlug(slug);
+
+            // Lay CatID cua san pham hien tai
+            CategoriesDAO categoriesDAO = new CategoriesDAO();
+            int catid = list.First().CatID;
+
+            // Lay danh sach san pham cung loai (related products)
+            List<ProductInfo> relatedProducts = productsDAO.GetProductDetailByCategoryId(catid);
+
+            // Truyen danh sach san pham cung loai cho View
+            ViewBag.RelatedProducts = relatedProducts;
+
+            //tra ve danh sach cho tiet san pham cho list
             return View("ProductDetail", list);
         }
 

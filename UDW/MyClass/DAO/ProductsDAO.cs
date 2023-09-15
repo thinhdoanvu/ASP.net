@@ -335,11 +335,58 @@ namespace MyClass.DAO
                         CreateAt = pc.Product.CreateAt,
                         UpdateBy = pc.Product.UpdateBy,
                         UpdateAt = pc.Product.UpdateAt,
-                        Status = pc.Product.Status
+                        Status = pc.Product.Status,
+                        //bo sung truong Slug cua Categories
+                        CategorySlug = pc.Category.Slug
                     }
                 )
                 .ToList();
             return list;
+        }
+
+        /////////////////////////////////////////////////////////////////////////////////////
+        ///Hien thi danh sach cac san pham cung loai
+        ///Trang giao dien chi tiet san pham
+        public List<ProductInfo> GetProductDetailByCategoryId(int catid)
+        {
+            var relatedProducts = db.Products
+                .Where(p => p.CatID == catid && p.Status == 1)
+                .Join(
+                    db.Categories,
+                    p => p.CatID,
+                    c => c.Id,
+                    (p, c) => new { Product = p, Category = c }
+                )
+                .Join(
+                    db.Suppliers,
+                    pc => pc.Product.SupplierId,
+                    s => s.Id,
+                    (pc, s) => new ProductInfo
+                    {
+                        Id = pc.Product.Id,
+                        CatID = pc.Product.CatID,
+                        Name = pc.Product.Name,
+                        CatName = pc.Category.Name,
+                        SupplierId = pc.Product.SupplierId,
+                        SupplierName = s.Name,
+                        Slug = pc.Product.Slug,
+                        Detail = pc.Product.Detail,
+                        Image = pc.Product.Image,
+                        Price = pc.Product.Price,
+                        SalePrice = pc.Product.SalePrice,
+                        Amount = pc.Product.Amount,
+                        MetaDesc = pc.Product.MetaDesc,
+                        MetaKey = pc.Product.MetaKey,
+                        CreateBy = pc.Product.CreateBy,
+                        CreateAt = pc.Product.CreateAt,
+                        UpdateBy = pc.Product.UpdateBy,
+                        UpdateAt = pc.Product.UpdateAt,
+                        Status = pc.Product.Status
+                    }
+                )
+                .ToList();
+
+            return relatedProducts;
         }
 
     }

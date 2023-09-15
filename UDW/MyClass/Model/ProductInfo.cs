@@ -16,6 +16,9 @@ namespace MyClass.Model
 
         public string CatName { get; set; }
 
+        //bo sung them truong Slug cua Categories: detail product
+        public string CategorySlug { get; set; }
+
         public int SupplierId { get; set; }
 
         public string SupplierName { get; set; }
