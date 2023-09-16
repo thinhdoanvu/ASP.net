@@ -144,6 +144,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Library\CartItem.cs" />
+    <Compile Include="Library\XCart.cs" />
     <Compile Include="Library\XMessage.cs" />
     <Compile Include="Library\XString.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -2711,6 +2713,7 @@
     <Content Include="Views\Site\PostPage.cshtml" />
     <Content Include="Views\Site\PostTopic.cshtml" />
     <Content Include="Views\Module\MenuFooter.cshtml" />
+    <Content Include="Views\Giohang\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2720,7 +2723,6 @@
     <Folder Include="Public\img\post\" />
     <Folder Include="Public\img\slider\" />
     <Folder Include="Public\img\supplier\" />
-    <Folder Include="Views\Giohang\" />
     <Folder Include="Views\Lienhe\" />
     <Folder Include="Views\Timkiem\" />
   </ItemGroup>

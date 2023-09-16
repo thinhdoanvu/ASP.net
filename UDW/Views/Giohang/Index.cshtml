@@ -1,0 +1,59 @@
+﻿@model IEnumerable<UDW.Library.CartItem>
+
+@{
+    ViewBag.Title = "Giỏ hàng";
+    Layout = "~/Views/Shared/_LayoutSite.cshtml";
+}
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+
+    <!-- Main content -->
+    <section class="content my-2">
+
+        <!-- Default box -->
+        <div class="card">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-md-6">
+                        <strong class="text-danger">DANH SÁCH GIỎ HÀNG</strong>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+            @if (Model != null)
+            {
+                <table class="table table-bordered table-striped" id="myTable">
+                    <thead>
+                        <tr>
+                            <th>Sản phẩm</th>
+                            <th style="width:50px;">Hình ảnh</th>
+                            <th>Số lượng</th>
+                            <th>Đơn giá</th>
+                            <th>Thành tiền</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                        <tr>
+                            <td>@item.Name </td>
+                            <td><img src="~/Public/img/product/@item.Img" alt="Img" class="img-fluid" /></td>
+                            <td class="card-product__price">@item.Ammount</td>
+                            <td class="card-product__price">@string.Format("{0:0,0}", @item.Price)<sup>đ</sup></td>
+                            <td class="card-product__price">@string.Format("{0:0,0}", @item.Total)<sup>đ</sup></td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <h1>Chưa có giỏ hàng</h1>
+            }
+            </div><!-- /.card-body -->
+        </div><!-- /.card -->
+    </section><!-- /.content -->
+</div><!-- /.content-wrapper -->
