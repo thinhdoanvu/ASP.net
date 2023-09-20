@@ -32,6 +32,7 @@ namespace UDW.Library
                         if (item.ProductId == productid)
                         {
                             list[vt].Ammount += 1;
+                            list[vt].Total = list[vt].Ammount * list[vt].Price;
                         }
                         vt++;
                     }
@@ -47,17 +48,55 @@ namespace UDW.Library
             return list;
         }
 
-
-        public void UpdateCart()
+        //////////////////////////////////////////////////////////////////
+        ///UpdateCart
+        public void UpdateCart(string[] arramout)
         {
 
+            // da co thong tin trong gio hang, lay thong tin cua session -> ep kieu ve list
+            List<CartItem> list = this.GetCart();
+            int vt = 0;
+            foreach (CartItem cartitem in list)
+            {
+                list[vt].Ammount = int.Parse(arramout[vt]);
+                list[vt].Total = list[vt].Ammount * list[vt].Price;
+                vt++;
+            }
+            //cap nhat lai gio hang
+            System.Web.HttpContext.Current.Session["MyCart"] = list;
         }
-
-        public void DelCart()
+        //////////////////////////////////////////////////////////////////
+        ///DelCart
+        public void DelCart(int? productid=null)
         {
-
+            if (productid!=null)
+            {
+                if (!System.Web.HttpContext.Current.Session["MyCart"].Equals(""))
+                {
+                    List<CartItem> list = (List<CartItem>)System.Web.HttpContext.Current.Session["MyCart"];
+                    int vt = 0;
+                    foreach (var item in list)
+                    {
+                        if (item.ProductId == productid)
+                        {
+                            list.RemoveAt(vt);
+                            break;
+                        }
+                        vt++;
+                    }
+                    //cap nhat lai gio hang
+                    System.Web.HttpContext.Current.Session["MyCart"] = list;
+                }
+            }
+            else
+            {
+                //cap nhat lai gio hang
+                System.Web.HttpContext.Current.Session["MyCart"] = "";
+            }
         }
 
+        //////////////////////////////////////////////////////////////////
+        ///GetCart
         public List<CartItem> GetCart()
         {
             if (System.Web.HttpContext.Current.Session["MyCart"].Equals(""))

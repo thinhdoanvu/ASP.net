@@ -33,5 +33,35 @@ namespace UDW.Controllers
             //chuyen huong trang
             return RedirectToAction("Index", "Giohang");
         }
+
+        //////////////////////////////////////////////////////////////////
+        ///DelCart
+        public ActionResult CartDel(int productid)
+        {
+            xcart.DelCart(productid);
+            return RedirectToAction("Index","Giohang");
+        }
+
+        //////////////////////////////////////////////////////////////////
+        ///CartUpdate
+        public ActionResult CartUpdate(FormCollection form)
+        {
+            if (!string.IsNullOrEmpty(form["capnhat"]))//nut ThemCategory duoc nhan
+            {
+                var listamount = form["amount"];
+                //chuyen danh sach thanh dang mang: vi du 1,2,3,...
+                var listarr = listamount.Split(',');//cat theo dau ,
+                xcart.UpdateCart(listarr);
+            }
+            return RedirectToAction("Index", "Giohang");
+        }
+
+        //////////////////////////////////////////////////////////////////
+        ///CartUpdate
+        public ActionResult CartDelAll()
+        {
+            xcart.DelCart();
+            return RedirectToAction("Index", "Giohang");
+        }
     }
 }

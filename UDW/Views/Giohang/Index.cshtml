@@ -21,38 +21,53 @@
                 </div>
             </div>
             <div class="card-body">
-            @if (Model != null)
-            {
-                <table class="table table-bordered table-striped" id="myTable">
-                    <thead>
-                        <tr>
-                            <th>Sản phẩm</th>
-                            <th style="width:50px;">Hình ảnh</th>
-                            <th>Số lượng</th>
-                            <th>Đơn giá</th>
-                            <th>Thành tiền</th>
-                            <th></th>
-                        </tr>
-                    </thead>
+                @if (Model != null)
+                {
+                    using (Html.BeginForm("CartUpdate", "Giohang", FormMethod.Post))
+                    {
+                        <table class="table table-bordered table-striped" id="myTable">
+                            <thead>
+                                <tr>
+                                    <th>Sản phẩm</th>
+                                    <th style="width:100px;">Hình ảnh</th>
+                                    <th>Số lượng</th>
+                                    <th>Đơn giá</th>
+                                    <th>Thành tiền</th>
+                                    <th>Chức năng</th>
+                                </tr>
+                            </thead>
 
-                    <tbody>
-                        @foreach (var item in Model)
-                        {
-                        <tr>
-                            <td>@item.Name </td>
-                            <td><img src="~/Public/img/product/@item.Img" alt="Img" class="img-fluid" /></td>
-                            <td class="card-product__price">@item.Ammount</td>
-                            <td class="card-product__price">@string.Format("{0:0,0}", @item.Price)<sup>đ</sup></td>
-                            <td class="card-product__price">@string.Format("{0:0,0}", @item.Total)<sup>đ</sup></td>
-                        </tr>
-                        }
-                    </tbody>
-                </table>
-            }
-            else
-            {
-                <h1>Chưa có giỏ hàng</h1>
-            }
+                            <tbody>
+                                @{ decimal tongtien = 0;}
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>@item.Name </td>
+                                        <td><img src="~/Public/img/product/@item.Img" alt="Img" class="img-fluid" /></td>
+                                        <td class="card-product__price"><input name="amount" value="@item.Ammount" type="number" min="1" /></td>
+                                        <td class="card-product__price">@string.Format("{0:0,0}", @item.Price)<sup>đ</sup></td>
+                                        <td class="card-product__price">@string.Format("{0:0,0}", @item.Total)<sup>đ</sup></td>
+                                        <td><a href="@Url.Action("CartDel", "Giohang", new { productid = @item.ProductId })" class="btn-sm btn-danger"> <i class="fa fa-trash"></i></a></td>
+                                    </tr>
+                                    tongtien += item.Total;
+                                }
+                                <tr>
+                                    <td colspan="3">
+                                        <a href="@Url.Action("Index", "Site")" class="btn-sm btn-success"> <i class="fa fa-plus"></i>Mua thêm sản phẩm</a>
+                                        <input class="btn-sm btn-info" name="capnhat" value="Cập nhật đơn hàng" type="submit"/>
+                                        <a href="@Url.Action("CartDelAll", "Giohang")" class="btn-sm btn-danger"> <i class="fa fa-plus"></i>Xóa đơn hàng</a>
+                                    </td>
+                                    <td>Thành tiền</td>
+                                    <td colspan="1">@string.Format("{0:0,0}", tongtien)<sup>đ</sup></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    }
+                }
+                else
+                {
+                    <h1> Không có sản phẩm trong giỏ hàng </h1>
+                }
             </div><!-- /.card-body -->
         </div><!-- /.card -->
     </section><!-- /.content -->
