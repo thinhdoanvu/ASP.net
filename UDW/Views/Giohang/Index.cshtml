@@ -54,8 +54,9 @@
                                 <tr>
                                     <td colspan="3">
                                         <a href="@Url.Action("Index", "Site")" class="btn-sm btn-success"> <i class="fa fa-plus"></i>Mua thêm sản phẩm</a>
-                                        <input class="btn-sm btn-info" name="capnhat" value="Cập nhật đơn hàng" type="submit"/>
-                                        <a href="@Url.Action("CartDelAll", "Giohang")" class="btn-sm btn-danger"> <i class="fa fa-plus"></i>Xóa đơn hàng</a>
+                                        <input class="btn-sm btn-info" name="capnhat" value="Cập nhật đơn hàng" type="submit" />
+                                        <a href="@Url.Action("CartDelAll", "Giohang")" class="btn-sm btn-danger"> <i class="fa fa-trash-alt"></i> Xóa đơn hàng</a>
+                                        <a href="@Url.Action("ThanhToan", "Giohang")" class="btn-sm btn-dark"> <i class="fa fa-paypal"></i> Thanh toán</a>
                                     </td>
                                     <td>Thành tiền</td>
                                     <td colspan="1">@string.Format("{0:0,0}", tongtien)<sup>đ</sup></td>

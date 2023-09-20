@@ -41,6 +41,20 @@ namespace UDW
                defaults: new { controller = "Giohang", action = "Index", id = UrlParameter.Optional }
            );
 
+            //Khai bao cho URL co dinh: thanh-toan
+            routes.MapRoute(
+               name: "Thanhtoan",
+               url: "thanh-toan",
+               defaults: new { controller = "Giohang", action = "ThanhToan", id = UrlParameter.Optional }
+           );
+
+            //Khai bao cho URL co dinh: dăng-nhap
+            routes.MapRoute(
+               name: "DangNhap",
+               url: "dang-nhap",
+               defaults: new { controller = "Khachhang", action = "DangNhap", id = UrlParameter.Optional }
+           );
+
             //Khai bao cho URL co dinh: tim-kiem
             routes.MapRoute(
                name: "Timkiem",

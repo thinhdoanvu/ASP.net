@@ -137,6 +137,7 @@
     <Compile Include="Areas\Admin\Controllers\SupplierController.cs" />
     <Compile Include="Areas\Admin\Controllers\TopicController.cs" />
     <Compile Include="Controllers\GiohangController.cs" />
+    <Compile Include="Controllers\KhachhangController.cs" />
     <Compile Include="Controllers\LienheController.cs" />
     <Compile Include="Controllers\ModuleController.cs" />
     <Compile Include="Controllers\TimkiemController.cs" />
@@ -2714,6 +2715,7 @@
     <Content Include="Views\Site\PostTopic.cshtml" />
     <Content Include="Views\Module\MenuFooter.cshtml" />
     <Content Include="Views\Giohang\Index.cshtml" />
+    <Content Include="Views\Giohang\ThanhToan.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2723,6 +2725,7 @@
     <Folder Include="Public\img\post\" />
     <Folder Include="Public\img\slider\" />
     <Folder Include="Public\img\supplier\" />
+    <Folder Include="Views\Khachhang\" />
     <Folder Include="Views\Lienhe\" />
     <Folder Include="Views\Timkiem\" />
   </ItemGroup>

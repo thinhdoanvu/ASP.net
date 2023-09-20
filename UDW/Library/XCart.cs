@@ -89,10 +89,10 @@ namespace UDW.Library
                 }
             }
             else
-            {
-                //cap nhat lai gio hang
-                System.Web.HttpContext.Current.Session["MyCart"] = "";
-            }
+                {
+                    //cap nhat lai gio hang
+                    System.Web.HttpContext.Current.Session["MyCart"] = "";
+                }
         }
 
         //////////////////////////////////////////////////////////////////
