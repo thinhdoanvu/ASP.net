@@ -8,7 +8,7 @@ using System.Web;
 
 namespace UDW.Library
 {
-    public class XString
+    public static class XString
     {
         public static string Str_Slug(string s)
         {
@@ -39,7 +39,7 @@ namespace UDW.Library
             StringBuilder sbHash = new StringBuilder();
             foreach (byte b in bHash)
             {
-                sbHash.Append(String.Format("{0:x2}",b));
+                sbHash.Append(String.Format("{0:x2}", b));
             }
             return sbHash.ToString();
         }
@@ -49,10 +49,11 @@ namespace UDW.Library
             int lengt = (length ?? 20);
             if (str.Length > lengt)
             {
-                str = str.Substring(0,lengt)+"...";
+                str = str.Substring(0, lengt) + "...";
             }
             return str;
         }
+
     }
 
 }

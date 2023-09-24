@@ -142,6 +142,7 @@
     <Compile Include="Controllers\ModuleController.cs" />
     <Compile Include="Controllers\TimkiemController.cs" />
     <Compile Include="Controllers\SiteController.cs" />
+    <Compile Include="Controllers\User.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
