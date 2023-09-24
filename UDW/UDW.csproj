@@ -2716,6 +2716,7 @@
     <Content Include="Views\Module\MenuFooter.cshtml" />
     <Content Include="Views\Giohang\Index.cshtml" />
     <Content Include="Views\Giohang\ThanhToan.cshtml" />
+    <Content Include="Views\Khachhang\DangNhap.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2725,7 +2726,6 @@
     <Folder Include="Public\img\post\" />
     <Folder Include="Public\img\slider\" />
     <Folder Include="Public\img\supplier\" />
-    <Folder Include="Views\Khachhang\" />
     <Folder Include="Views\Lienhe\" />
     <Folder Include="Views\Timkiem\" />
   </ItemGroup>

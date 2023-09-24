@@ -15,28 +15,38 @@ namespace MyClass.Model
         public int Id { get; set; }
 
         [Required]
-        public string Name { get; set; }
-
-        public string Slug { get; set; }
-
-        public int? ParentID { get; set; }
-
-        public int? Order { get; set; }
+        public string Username { get; set; }
 
         [Required]
-        public string MetaDesc { get; set; }
+        public string Password { get; set; }
 
         [Required]
-        public string MetaKey { get; set; }
+        public string Fullname { get; set; }
 
-        public int CreateBy { get; set; }
+        [Required]
+        public string Email { get; set; }
 
-        public DateTime CreateAt { get; set; }
+        [Required]
+        public string Phone { get; set; }
 
-        public int UpdateBy { get; set; }
+        public string Img { get; set; }
 
-        public DateTime UpdateAt { get; set; }
+        [Required]
+        public string Gender { get; set; }
 
-        public int Status { get; set; }
+        [Required]
+        public string Role { get; set; }
+
+        public string Address { get; set; }
+
+        public DateTime? CreateAt { get; set; }
+
+        public int? CreateBy { get; set; }
+
+        public DateTime? UpdateAt { get; set; }
+
+        public int? UpdateBy { get; set; }
+
+        public int? Status { get; set; }
     }
 }
